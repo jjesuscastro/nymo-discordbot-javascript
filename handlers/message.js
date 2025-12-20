@@ -35,6 +35,14 @@ async function handleMessage(interaction, config, client) {
 
     await webhook.send({ content: text });
 
+    // Send a visible message in the secret channel
+    const secretChan = client.channels.cache.get(secretChannelId);
+    if (secretChan) {
+        await secretChan.send({
+            content: `>>> **${fakeName}**\n${text}\n*Sent to <#${publicChannel}>*`
+        });
+    }
+
     if (config.logChannel) {
         const logChan = client.channels.cache.get(config.logChannel);
         if (logChan) {
