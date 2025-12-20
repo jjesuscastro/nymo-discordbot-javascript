@@ -11,9 +11,7 @@ const botCommands = new SlashCommandBuilder()
     .addSubcommand(sub =>
         sub.setName('setalias')
             .setDescription('Assign an alias to a secret channel')
-            .addChannelOption(opt => opt.setName('secretchannel').setDescription('The secret channel').setRequired(true))
-            .addStringOption(opt => opt.setName('alias').setDescription('The alias to use').setRequired(true))
-            .addStringOption(opt => opt.setName('avatarurl').setDescription('Optional avatar URL')))
+            .addChannelOption(opt => opt.setName('secretchannel').setDescription('The secret channel').setRequired(true)))
     .addSubcommand(sub =>
         sub.setName('log')
             .setDescription('Set the channel where real identities are logged')
