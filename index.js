@@ -23,6 +23,6 @@ registerCommands(TOKEN, CLIENT_ID);
 
 // Event handlers
 client.on('interactionCreate', interaction => handleInteraction(interaction, client));
-client.once('ready', () => console.log(`Logged in as ${client.user.tag}!`));
+client.once('clientReady', () => console.log(`Logged in as ${client.user.tag}!`));
 
 client.login(TOKEN);
