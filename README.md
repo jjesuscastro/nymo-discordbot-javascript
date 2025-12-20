@@ -10,8 +10,9 @@
 - /nymo setsecret <#secret-channel> <#public-channel>
   - links the <#secret-channel> to the <#public-channel>
   - a <#secret-channel> will have an Alias attached to it, you can set an Alias with the next command
-- /nymo setalias <#secret-channel> \<alias-name> \<alias-avatar-url>
+- /nymo setalias <#secret-channel>
   - sets an alias for the <#secret-channel>
+  - will open a modal form to input Alias Name and image
 - /nymo message \<message>
   - must be used in secret channels
   - will send a message to the public channel using the alias assigned to the secret channel
