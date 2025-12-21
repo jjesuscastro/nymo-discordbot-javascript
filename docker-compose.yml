@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: nymo-bot
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - CLIENT_ID=${CLIENT_ID}
+      - MONGODB_URI=${MONGODB_URI}
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+    networks:
+      - bot-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: nymo-mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-password}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - bot-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  bot-network:
+    driver: bridge
