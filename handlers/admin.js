@@ -41,9 +41,6 @@ async function handleAdmin(interaction, config) {
         return interaction.showModal(modal);
     }
 
-    // Defer reply for other commands
-    interaction.deferReply({ flags: MessageFlags.Ephemeral });
-
     if (sub === 'setsecret') {
         const secretChannel = interaction.options.getChannel('secretchannel');
         const publicChannel = interaction.options.getChannel('publicchannel');
@@ -56,14 +53,14 @@ async function handleAdmin(interaction, config) {
         });
 
         await config.save();
-        return interaction.editReply(`✅ Secret channel <#${secretChannel.id}> will relay to <#${publicChannel.id}>`);
+        return interaction.reply({ content: `-# Secret channel <#${secretChannel.id}> will relay to <#${publicChannel.id}>` });
     }
 
     if (sub === 'log') {
         const channel = interaction.options.getChannel('channel');
         config.logChannel = channel.id;
         await config.save();
-        return interaction.editReply(`✅ Log channel set to <#${channel.id}>`);
+        return interaction.reply({ content: `-# Log channel set to <#${channel.id}>` });
     }
 }
 
@@ -109,8 +106,7 @@ async function handleAliasModal(interaction, config) {
     await config.save();
 
     return interaction.reply({
-        content: `✅ Alias for <#${secretChannelId}> set to **${alias}**`,
-        flags: MessageFlags.Ephemeral
+        content: `-# Alias for <#${secretChannelId}> set to **${alias}**`
     });
 }
 

@@ -1,14 +1,12 @@
 const { MessageFlags } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
-    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-
     const text = interaction.options.getString('text');
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
 
     if (!secretConfig) {
-        return interaction.editReply("❌ This channel is not configured as a secret channel.");
+        return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
@@ -56,8 +54,6 @@ async function handleMessage(interaction, config, client) {
             });
         }
     }
-
-    return interaction.editReply(`✅ Your message was sent to <#${publicChannel}> as **${fakeName || "Anonymous"}**`);
 }
 
 module.exports = handleMessage;
