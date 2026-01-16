@@ -22,4 +22,4 @@ services:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
 
 volumes:
-  mongodb_data:
+  mongo_data:
