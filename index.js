@@ -9,10 +9,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Connect to MongoDB
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(MONGO_URI)
     .then(() => console.log("✅ Connected to MongoDB Atlas"))
     .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
