@@ -31,13 +31,38 @@ async function handleRoll(interaction, config, client) {
         await config.save();
     }
 
-    let result = getRandomIntInclusive(1, 20);
-    let text = `Rolled a ${result}`;
+    const secretChan = client.channels.cache.get(secretChannelId);
+    if (count <= 0) {
+        if (secretChan) {
+            await secretChan.send({
+                content: `>>> *Count should be greater than 0*`
+            });
+        }
+        return;
+    }
+
+    let text = 'Rolled ';
+
+    if (count === 1) {
+        text = 'Rolled a '
+    }
+
+    let results = [];
+
+    for (let i = 0; i < count; i++) {
+        results.push(getRandomIntInclusive(1, 20));
+    }
+
+    let i = 0;
+    do {
+        text += `${results[i]}, `;
+    } while (i < count - 1);
+
+    text += `and ${results[count - 1]}.`;
 
     await webhook.send({ content: text });
 
     // Send a visible message in the secret channel
-    const secretChan = client.channels.cache.get(secretChannelId);
     if (secretChan) {
         await secretChan.send({
             content: `>>> **${fakeName}**\n${text}\n*Sent to <#${publicChannel}>*`
