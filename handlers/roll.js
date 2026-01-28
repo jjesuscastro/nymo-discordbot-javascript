@@ -1,7 +1,7 @@
 const { MessageFlags } = require('discord.js');
 
 async function handleRoll(interaction, config, client) {
-    const count = +interaction.options.getString('count');
+    const count = +interaction.options.getNumber('count');
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
 
