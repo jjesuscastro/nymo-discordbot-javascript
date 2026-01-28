@@ -23,7 +23,7 @@ async function handleInteraction(interaction, client) {
         return handleAdmin(interaction, config);
     }
 
-    if (sub === 'message') {
+    if (['message', 'roll'].includes(sub)) {
         return handleMessage(interaction, config, client);
     }
 }
