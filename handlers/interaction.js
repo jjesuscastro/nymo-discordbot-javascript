@@ -2,6 +2,7 @@ const { getConfig } = require('../config');
 const handleAdmin = require('./admin');
 const { handleAliasModal } = require('./admin');
 const handleMessage = require('./message');
+const handleRoll = require('./roll');
 
 async function handleInteraction(interaction, client) {
     const guildId = interaction.guildId;
