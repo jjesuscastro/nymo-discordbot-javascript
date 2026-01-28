@@ -22,7 +22,7 @@ async function handleMessage(interaction, config, client) {
 
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * 20) + 1;
-            rolls.push(`🎲${roll}`);
+            rolls.push(`\` 🎲${roll} \``);
         }
 
         // Replace the {{n}} with the roll results joined by a space
