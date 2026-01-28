@@ -42,7 +42,7 @@ async function handleRoll(interaction, config, client) {
 
     const results = Array.from({ length: count }, () => Math.floor(Math.random() * 20) + 1);
     const resultString = results.join(', ');
-    const finalContent = `Rolled ${count === 1 ? 'a' : ''} ${resultString}.`;
+    const finalContent = `*🎲 Rolled ${resultString}.*`;
 
     try {
         await webhook.send({ content: finalContent });
