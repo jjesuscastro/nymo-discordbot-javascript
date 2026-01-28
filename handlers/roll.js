@@ -1,93 +1,68 @@
 const { MessageFlags } = require('discord.js');
 
 async function handleRoll(interaction, config, client) {
-    const count = +interaction.options.getNumber('count');
+    const count = interaction.options.getInteger('count') || 1;
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
 
     if (!secretConfig) {
-        return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
+        return interaction.reply({
+            content: "❌ This channel is not configured as a secret channel.",
+            flags: MessageFlags.Ephemeral
+        });
     }
 
-    const { publicChannel, fakeName, webhookId } = secretConfig;
-    const publicChan = client.channels.cache.get(publicChannel);
+    if (count <= 0) {
+        return interaction.reply({
+            content: "❌ Count must be at least 1.",
+            flags: MessageFlags.Ephemeral
+        });
+    }
+
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
+    const { publicChannel, fakeName, webhookId, avatarUrl } = secretConfig;
+    const publicChan = await client.channels.fetch(publicChannel);
 
     let webhook;
-    if (webhookId) {
-        try {
-            webhook = await client.fetchWebhook(webhookId);
-        } catch {
-            secretConfig.webhookId = null;
-            await config.save();
-        }
+    try {
+        if (webhookId) webhook = await client.fetchWebhook(webhookId);
+    } catch {
+        secretConfig.webhookId = null;
     }
 
     if (!webhook) {
         webhook = await publicChan.createWebhook({
             name: fakeName || "Anonymous",
-            avatar: secretConfig.avatarUrl || undefined
+            avatar: avatarUrl || undefined
         });
         secretConfig.webhookId = webhook.id;
         await config.save();
     }
 
-    const secretChan = client.channels.cache.get(secretChannelId);
-    if (count <= 0) {
-        if (secretChan) {
-            await secretChan.send({
-                content: `>>> *Count should be greater than 0*`
-            });
-        }
-        return;
-    }
+    const results = Array.from({ length: count }, () => Math.floor(Math.random() * 20) + 1);
+    const resultString = results.join(', ');
+    const finalContent = `Rolled ${count === 1 ? 'a' : ''} ${resultString}.`;
 
-    let text = 'Rolled ';
+    try {
+        await webhook.send({ content: finalContent });
 
-    if (count === 1) {
-        text = 'Rolled a '
-    }
-
-    let results = [];
-
-    for (let i = 0; i < count; i++) {
-        results.push(getRandomIntInclusive(1, 20));
-    }
-
-    let i = 0;
-    do {
-        text += `${results[i]}, `;
-    } while (i < count - 1);
-
-    text += `and ${results[count - 1]}.`;
-
-    await webhook.send({ content: text });
-
-    // Send a visible message in the secret channel
-    if (secretChan) {
-        await secretChan.send({
-            content: `>>> **${fakeName}**\n${text}\n*Sent to <#${publicChannel}>*`
+        await interaction.editReply({
+            content: `✅ Sent to <#${publicChannel}>\n>>> **${fakeName}**\n${finalContent}`
         });
-    }
 
-    if (config.logChannel) {
-        const logChan = client.channels.cache.get(config.logChannel);
-        if (logChan) {
-            await logChan.send({
-                content: `>>> 🛡️ **Log**\n`
-                    + `**User:** ${interaction.user.tag} (${interaction.user.id})\n`
-                    + `**Alias:** ${fakeName}\n`
-                    + `**Secret Channel:** <#${secretChannelId}>\n`
-                    + `**Public Channel:** <#${publicChannel}>\n`
-                    + `**Content:** ${text}`
-            });
+        if (config.logChannel) {
+            const logChan = client.channels.cache.get(config.logChannel);
+            if (logChan) {
+                await logChan.send({
+                    content: `>>> 🛡️ **Log**\n**User:** ${interaction.user.tag}\n**Alias:** ${fakeName}\n**Target:** <#${publicChannel}>\n**Rolls:** ${resultString}`
+                });
+            }
         }
+    } catch (err) {
+        console.error(err);
+        await interaction.editReply("⚠️ Failed to send roll. Check my permissions.");
     }
-}
-
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 module.exports = handleRoll;
