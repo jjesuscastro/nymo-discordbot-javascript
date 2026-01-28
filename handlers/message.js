@@ -1,7 +1,7 @@
 const { MessageFlags } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
-    const text = interaction.options.getString('text');
+    let text = interaction.options.getString('text'); // Use 'let' because we will modify this
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
 
@@ -9,8 +9,32 @@ async function handleMessage(interaction, config, client) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
+    // --- Dice Rolling Logic ---
+    const diceRegex = /\{\{(\d+)\}\}/;
+    const match = text.match(diceRegex);
+
+    if (match) {
+        const numDice = parseInt(match[1]);
+        const rolls = [];
+
+        // Limit dice to prevent spam (e.g., max 20)
+        const safeNumDice = Math.min(numDice, 20);
+
+        for (let i = 0; i < safeNumDice; i++) {
+            const roll = Math.floor(Math.random() * 20) + 1;
+            rolls.push(`🎲${roll}`);
+        }
+
+        // Replace the {{n}} with the roll results joined by a space
+        text = text.replace(diceRegex, rolls.join(' '));
+    }
+    // ---------------------------
+
     const { publicChannel, fakeName, webhookId } = secretConfig;
     const publicChan = client.channels.cache.get(publicChannel);
+
+    // Initial acknowledgement to Discord so the interaction doesn't time out
+    await interaction.deferReply({ ephemeral: true });
 
     let webhook;
     if (webhookId) {
@@ -41,6 +65,7 @@ async function handleMessage(interaction, config, client) {
         });
     }
 
+    // Log the action
     if (config.logChannel) {
         const logChan = client.channels.cache.get(config.logChannel);
         if (logChan) {
@@ -54,6 +79,9 @@ async function handleMessage(interaction, config, client) {
             });
         }
     }
+
+    // Finish the interaction
+    await interaction.editReply({ content: "✅ Message sent with dice rolls!" });
 }
 
 module.exports = handleMessage;
