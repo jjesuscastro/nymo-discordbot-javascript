@@ -1,39 +1,37 @@
 const { MessageFlags } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
-    let text = interaction.options.getString('text'); // Use 'let' because we will modify this
+    // UPDATED: Get text from the modal field instead of command options
+    let text = interaction.fields.getTextInputValue('message_text');
+
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
 
     if (!secretConfig) {
+        // Note: For modals, we use reply because it's the first response
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    // --- Dice Rolling Logic ---
+    // --- Dice Rolling Logic (Stays the same!) ---
     const diceRegex = /\{\{(\d+)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
         const numDice = parseInt(match[1]);
         const rolls = [];
-
-        // Limit dice to prevent spam (e.g., max 20)
         const safeNumDice = Math.min(numDice, 20);
 
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * 20) + 1;
             rolls.push(`\` 🎲${roll} \``);
         }
-
-        // Replace the {{n}} with the roll results joined by a space
         text = text.replace(diceRegex, rolls.join(' '));
     }
-    // ---------------------------
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
     const publicChan = client.channels.cache.get(publicChannel);
 
-    // Initial acknowledgement to Discord so the interaction doesn't time out
+    // Defer reply because webhooks can be slow
     await interaction.deferReply({ ephemeral: true });
 
     let webhook;
@@ -57,7 +55,6 @@ async function handleMessage(interaction, config, client) {
 
     await webhook.send({ content: text });
 
-    // Send a visible message in the secret channel
     const secretChan = client.channels.cache.get(secretChannelId);
     if (secretChan) {
         await secretChan.send({
@@ -65,7 +62,6 @@ async function handleMessage(interaction, config, client) {
         });
     }
 
-    // Log the action
     if (config.logChannel) {
         const logChan = client.channels.cache.get(config.logChannel);
         if (logChan) {
@@ -80,7 +76,6 @@ async function handleMessage(interaction, config, client) {
         }
     }
 
-    // Finish the interaction
     await interaction.editReply({ content: "✅ Message sent with dice rolls!" });
 }
 
