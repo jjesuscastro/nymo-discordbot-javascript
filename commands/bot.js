@@ -22,7 +22,6 @@ const botCommands = new SlashCommandBuilder()
     .addSubcommand(sub =>
         sub.setName('message')
             .setDescription('Send an anonymous message from this channel. Use {{n}} to roll n D20s.')
-            .addStringOption(opt => opt.setName('text').setDescription('The message to send anonymously').setRequired(true))
     );
 
 module.exports = botCommands.toJSON();

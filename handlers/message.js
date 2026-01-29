@@ -1,18 +1,15 @@
 const { MessageFlags } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
-    // UPDATED: Get text from the modal field instead of command options
     let text = interaction.fields.getTextInputValue('message_text');
 
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
 
     if (!secretConfig) {
-        // Note: For modals, we use reply because it's the first response
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    // --- Dice Rolling Logic (Stays the same!) ---
     const diceRegex = /\{\{(\d+)\}\}/;
     const match = text.match(diceRegex);
 
@@ -31,7 +28,6 @@ async function handleMessage(interaction, config, client) {
     const { publicChannel, fakeName, webhookId } = secretConfig;
     const publicChan = client.channels.cache.get(publicChannel);
 
-    // Defer reply because webhooks can be slow
     await interaction.deferReply({ ephemeral: true });
 
     let webhook;
