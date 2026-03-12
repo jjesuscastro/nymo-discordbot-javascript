@@ -1,4 +1,5 @@
 const { MessageFlags } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
     let text = interaction.fields.getTextInputValue('message_text');
@@ -33,9 +34,15 @@ async function handleMessage(interaction, config, client) {
         }
         text = text.replace(diceRegex, rolls.join(' '));
 
-        text += "\n > Rolled: ";
-        text += numDice+"d"+sideDice;
-        text += "\n > " + rolls2;
+        const title = "Rolled: " + numDice+"d"+sideDice;
+        const diceEmbed = new EmbedBuilder()
+            .addFields(
+            { name: title, value: rolls2 },
+        	)
+
+        //text += "\n > Rolled: ";
+        //text += numDice+"d"+sideDice;
+        //text += "\n > " + rolls2;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
@@ -63,6 +70,7 @@ async function handleMessage(interaction, config, client) {
     }
 
     await webhook.send({ content: text });
+    await webhook.send({ embeds: [diceEmbed] });
 
     const secretChan = client.channels.cache.get(secretChannelId);
     if (secretChan) {
