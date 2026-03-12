@@ -26,19 +26,29 @@ async function handleMessage(interaction, config, client) {
 
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
-            if (diceModifier == "+"){
-                roll += numModifier;
-            }
-            if (diceModifier == "-"){
-                roll -= numModifier;
-            }  
+            // if (diceModifier == "+"){
+            //     roll += numModifier;
+            // }
+            // if (diceModifier == "-"){
+            //     roll -= numModifier;
+            // }  
             rolls.push(`\` 🎲${roll} \``);
             rolls2.push(roll);
         }
         
-        if(keep == "k")
-        { 
-        }
+        // if(keep == "k")
+        // { 
+        //     rolls = [];
+        //     const keepRolls = [];
+        //     let tempMax = 0;
+        //     for(let i = 0; i < keepNum; i++){
+        //         tempMax = Math.max(rolls2);
+        //         keepRolls.push(tempMax);
+        //         rolls.push(`\` 🎲${tempMax} \``);
+        //         const maxindex = rolls2.indexOf(tempMax);
+        //         rolls2.splice(1,maxindex);
+        //     }
+        // }
 
         text = text.replace(diceRegex, rolls.join(' '));
 
