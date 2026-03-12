@@ -15,7 +15,7 @@ async function handleMessage(interaction, config, client) {
 
     if (match) {
         const numDice = parseInt(match[1]);
-        const sideDice = parseInt(match[3]);
+        const sideDice = parseInt(match[2]);
         const rolls = [];
         const safeNumDice = Math.min(numDice, sideDice);
 
