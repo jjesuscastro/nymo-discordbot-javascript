@@ -6,6 +6,7 @@ async function handleMessage(interaction, config, client) {
 
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
+    var diceEmbed;
 
     if (!secretConfig) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
@@ -70,7 +71,7 @@ async function handleMessage(interaction, config, client) {
         }
         line2 += " ➜ " + total;
 
-        const diceEmbed = new EmbedBuilder()
+        diceEmbed = new EmbedBuilder()
             .addFields(
                 { name: line1, value: line2}
             );
@@ -111,9 +112,9 @@ async function handleMessage(interaction, config, client) {
         await config.save();
     }
 
-    //if(diceEmbed)
-    //    await webhook.send({ content: text, embed: diceEmbed });
-    //else
+    if(match)
+        await webhook.send({ content: text, embeds: diceEmbed });
+    else
         await webhook.send({ content: text });
 
     const secretChan = client.channels.cache.get(secretChannelId);
