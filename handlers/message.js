@@ -69,7 +69,7 @@ async function handleMessage(interaction, config, client) {
         await config.save();
     }
 
-    await webhook.send({ content: text });
+    //await webhook.send({ content: text });
     await webhook.send({ embeds: [diceEmbed] });
 
     const secretChan = client.channels.cache.get(secretChannelId);
