@@ -37,7 +37,7 @@ async function handleInteraction(interaction, client) {
             .setCustomId('message_text')
             .setLabel("Your Message")
             .setStyle(TextInputStyle.Paragraph) // This allows multiline!
-            .setPlaceholder('Type your message here... Use {{n}} to roll dice.')
+            .setPlaceholder('Type your message here... Use {{ndn}} to roll dice.')
             .setRequired(true);
 
         const row = new ActionRowBuilder().addComponents(textInput);
