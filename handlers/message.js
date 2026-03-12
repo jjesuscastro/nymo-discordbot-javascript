@@ -26,8 +26,6 @@ async function handleMessage(interaction, config, client) {
 
         for (let i = 0; i < numDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
-            
-            rolls.push(`\`🎲${roll}\``);
             rolls2.push(roll);
             total+=roll;
         }
@@ -49,7 +47,9 @@ async function handleMessage(interaction, config, client) {
         }
         if (diceModifier.toString() == "-"){
             total -= numModifier;
-        }  
+        }
+        rolls.push(`\`🎲${total}\``);
+            
         text = text.replace(diceRegex, rolls.join(' '));
 
         const match2 = match[0].toString();
@@ -57,7 +57,14 @@ async function handleMessage(interaction, config, client) {
 
         text += "\n > " + "**Rolled: ";
         text += diceRoll + "**";
-        text += "\n > -# " + "[" + rolls2 + "] ➜ " + total;
+        text += "\n > -# " + "[" + rolls2 + "]";
+        if (diceModifier.toString() == "+"){
+            text += "+" + numModifier;
+        }
+        if (diceModifier.toString() == "-"){
+            text += "-" + numModifier;
+        }
+        text += " ➜ " + total;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
