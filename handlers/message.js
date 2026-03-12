@@ -30,15 +30,17 @@ async function handleMessage(interaction, config, client) {
             total+=roll;
         }
         
-        if(keep == "k")
+        if(keep.toString() == "k")
         {   
-            rolls = [];
+            total = 0;
+            var tempRolls = rolls2.slice();
             let tempMax = 0;
             for(let i = 0; i < keepNum; i++){
-                tempMax = Math.max(rolls2);
-                rolls.push(`\` 🎲${tempMax} \``);
-                const maxindex = rolls2.indexOf(tempMax);
-                rolls2.splice(1,maxindex);
+                tempMax = Math.max(tempRolls);
+                total += tempMax;
+                const maxindex = tempRolls.indexOf(tempMax);
+                tempRolls.splice(1,maxindex);
+                rolls2[maxindex] = rolls[maxindex].toString()+"d";
             }
         }
 
