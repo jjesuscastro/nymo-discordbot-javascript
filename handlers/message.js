@@ -73,7 +73,7 @@ async function handleMessage(interaction, config, client) {
 
         diceEmbed = new EmbedBuilder()
             .addFields(
-                { name: line1, value: line2}
+                { name: 'line1', value: 'line2' }
             );
 
         text += "\n > " + "**Rolled: ";
