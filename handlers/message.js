@@ -38,7 +38,7 @@ async function handleMessage(interaction, config, client) {
             for(let i = 0; i < keepNum; i++){
                 tempMax = Math.max(tempRolls);
                 total += tempMax;
-                const maxindex = tempRolls.indexOf(tempMax);
+                var maxindex = tempRolls.indexOf(tempMax);
                 tempRolls.splice(1,maxindex);
                 rolls2[maxindex] = rolls[maxindex].toString()+"d";
             }
