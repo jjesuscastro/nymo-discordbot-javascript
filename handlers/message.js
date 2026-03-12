@@ -53,7 +53,7 @@ async function handleMessage(interaction, config, client) {
         const match2 = match.toString();
         var diceRoll = match2.substring(2, match2.length-2);
 
-        text += "\n > -# **Rolled:** ";
+        text += "\n > -# Rolled: ";
         text += diceRoll;
         text += "\n > -# " + rolls2;
     }
