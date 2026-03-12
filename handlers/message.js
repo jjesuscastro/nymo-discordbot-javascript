@@ -37,7 +37,7 @@ async function handleMessage(interaction, config, client) {
         const title = "Rolled: " + numDice+"d"+sideDice;
         const diceEmbed = new EmbedBuilder()
             .addFields(
-            { name: title, value: rolls2 },
+            { name: title, value: rolls2 }
         	);
 
         //text += "\n > Rolled: ";
@@ -69,7 +69,7 @@ async function handleMessage(interaction, config, client) {
         await config.save();
     }
 
-    //await webhook.send({ content: text });
+    await webhook.send({ content: text });
     await webhook.send({ embeds: [diceEmbed] });
 
     const secretChan = client.channels.cache.get(secretChannelId);
