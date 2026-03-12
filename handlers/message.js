@@ -31,18 +31,18 @@ async function handleMessage(interaction, config, client) {
             total+=roll;
         }
         
-        if(keep){
-                total = 0;
-                var tempRolls = rolls2.slice();
-                let tempMax = 0;
-                for(let i = 0; i < keepNum; i++){
-                    tempMax = Math.max(tempRolls);
-                    total += tempMax;
-                    var maxindex = tempRolls.indexOf(tempMax);
-                    tempRolls.splice(1,maxindex);
-                    rolls2[maxindex] = rolls[maxindex].toString()+"d";
-            }
-        }
+        // if(keep){
+        //         total = 0;
+        //         var tempRolls = rolls2.slice();
+        //         let tempMax = 0;
+        //         for(let i = 0; i < keepNum; i++){
+        //             tempMax = Math.max(tempRolls);
+        //             total += tempMax;
+        //             var maxindex = tempRolls.indexOf(tempMax);
+        //             tempRolls.splice(1,maxindex);
+        //             rolls2[maxindex] = rolls[maxindex].toString()+"d";
+        //     }
+        // }
 
         if(diceModifier){
             if (diceModifier.toString() == "+"){
@@ -111,6 +111,7 @@ async function handleMessage(interaction, config, client) {
         await config.save();
     }
 
+    if()
     await webhook.send({ content: text, embed: diceEmbed});
 
     const secretChan = client.channels.cache.get(secretChannelId);
