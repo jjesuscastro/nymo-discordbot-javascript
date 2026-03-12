@@ -16,9 +16,9 @@ async function handleMessage(interaction, config, client) {
     if (match) {
         const numDice = parseInt(match[1]);
         const sideDice = parseInt(match[2]);
-        const diceModifier = parseInt(match[3]);
+        const diceModifier = match[3];
         const numModifier = parseInt(match[4]);
-        const keep = parseInt(match[5]);
+        const keep = match[5];
         const keepNum = parseInt(match[6]);
         const rolls = [];
         const rolls2 = [];
@@ -31,33 +31,33 @@ async function handleMessage(interaction, config, client) {
             rolls2.push(roll);
             total+=roll;
         }
-        if (diceModifier == "+"){
+        
+        if(keep == "k")
+        {   
+            rolls = [];
+            let tempMax = 0;
+            for(let i = 0; i < keepNum; i++){
+                tempMax = Math.max(rolls2);
+                rolls.push(`\` 🎲${tempMax} \``);
+                const maxindex = rolls2.indexOf(tempMax);
+                rolls2.splice(1,maxindex);
+            }
+        }
+
+        if (diceModifier.toString() == "+"){
             total += numModifier;
         }
-        if (diceModifier == "-"){
+        if (diceModifier.toString() == "-"){
             total -= numModifier;
         }  
-
-        // if(keep == "k")
-        // { 
-        //     rolls = [];
-        //     let tempMax = 0;
-        //     for(let i = 0; i < keepNum; i++){
-        //         tempMax = Math.max(rolls2);
-        //         rolls.push(`\` 🎲${tempMax} \``);
-        //         const maxindex = rolls2.indexOf(tempMax);
-        //         rolls2.splice(1,maxindex);
-        //     }
-        // }
-
         text = text.replace(diceRegex, rolls.join(' '));
 
         const match2 = match[0].toString();
         var diceRoll = match2.substring(2, match2.length-2);
 
-        text += "\n > -# " + "**Rolled: ";
+        text += "\n > " + "**Rolled: ";
         text += diceRoll + "**";
-        text += "\n > -# " + "[" + rolls2 + "] ➜" + total;
+        text += "\n > -# " + "[" + rolls2 + "] ➜ " + total;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
