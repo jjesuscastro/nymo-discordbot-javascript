@@ -6,7 +6,7 @@ async function handleMessage(interaction, config, client) {
 
     const secretChannelId = interaction.channelId;
     const secretConfig = config.secretChannels.get(secretChannelId);
-    var diceEmbed;
+    var diceEmbed = new EmbedBuilder();
 
     if (!secretConfig) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
