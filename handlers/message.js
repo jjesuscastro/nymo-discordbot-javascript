@@ -111,10 +111,11 @@ async function handleMessage(interaction, config, client) {
         await config.save();
     }
 
-    if(diceEmbed)
-        await webhook.send({ content: text, embed: diceEmbed });
-    else
+    //if(diceEmbed)
+    //    await webhook.send({ content: text, embed: diceEmbed });
+    //else
         await webhook.send({ content: text });
+
     const secretChan = client.channels.cache.get(secretChannelId);
     if (secretChan) {
         await secretChan.send({
