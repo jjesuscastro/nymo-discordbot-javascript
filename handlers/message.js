@@ -1,5 +1,4 @@
 const { MessageFlags } = require('discord.js');
-const { EmbedBuilder } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
     let text = interaction.fields.getTextInputValue('message_text');
@@ -11,14 +10,16 @@ async function handleMessage(interaction, config, client) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    const diceRegex = /\{\{(\d+)[d](\d+)(k?)(\d?)\}\}/;
+    const diceRegex = /\{\{(\d+)[d](\d+)(\+?)(\d?)(k?)(\d?)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
         const numDice = parseInt(match[1]);
         const sideDice = parseInt(match[2]);
-        const keep = parseInt(match[3]);
-        const keepNum = parseInt(match[4]);
+        const diceModifier = parseInt(match[3]);
+        const numModifier = parseInt(match[4]);
+        const keep = parseInt(match[5]);
+        const keepNum = parseInt(match[6]);
         const rolls = [];
         const rolls2 = [];
         const safeNumDice = Math.min(numDice, sideDice);
@@ -29,16 +30,15 @@ async function handleMessage(interaction, config, client) {
 
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
+            if (diceModifier == "+"){
+                roll += numModifier;
+            }   
             rolls.push(`\` 🎲${roll} \``);
             rolls2.push(roll);
         }
         text = text.replace(diceRegex, rolls.join(' '));
 
-        const title = "Rolled: " + numDice+"d"+sideDice;
-        //const diceEmbed = new EmbedBuilder()
-        //    .addFields(
-        //    { name: title, value: rolls2 }
-        //	);
+        //const title = "Rolled: " + numDice+"d"+sideDice;
 
         text += "\n -# > **Rolled:** ";
         text += numDice+"d"+sideDice;
@@ -70,7 +70,6 @@ async function handleMessage(interaction, config, client) {
     }
 
     await webhook.send({ content: text });
-    //await webhook.send({ embeds: [diceEmbed] });
 
     const secretChan = client.channels.cache.get(secretChannelId);
     if (secretChan) {
