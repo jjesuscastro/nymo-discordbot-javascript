@@ -38,11 +38,11 @@ async function handleMessage(interaction, config, client) {
         }
         text = text.replace(diceRegex, rolls.join(' '));
 
-        //const title = "Rolled: " + numDice+"d"+sideDice;
+        var diceRoll = match.substring(2, match.length-2);
 
-        text += "\n -# > **Rolled:** ";
-        text += numDice+"d"+sideDice;
-        text += "\n -# > " + rolls2;
+        text += "\n > -# **Rolled:** ";
+        text += diceRoll;
+        text += "\n > -# " + rolls2;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
