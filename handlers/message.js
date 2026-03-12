@@ -38,7 +38,7 @@ async function handleMessage(interaction, config, client) {
         const diceEmbed = new EmbedBuilder()
             .addFields(
             { name: title, value: rolls2 },
-        	)
+        	);
 
         //text += "\n > Rolled: ";
         //text += numDice+"d"+sideDice;
