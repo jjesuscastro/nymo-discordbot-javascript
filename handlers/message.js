@@ -23,9 +23,8 @@ async function handleMessage(interaction, config, client) {
         // const keepNum = parseInt(match[6]);
         const rolls = [];
         const rolls2 = [];
-        const safeNumDice = Math.min(numDice, sideDice);
 
-        for (let i = 0; i < safeNumDice; i++) {
+        for (let i = 0; i < numDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
             // if (diceModifier == "+"){
             //     roll += numModifier;
@@ -40,11 +39,9 @@ async function handleMessage(interaction, config, client) {
         // if(keep == "k")
         // { 
         //     rolls = [];
-        //     const keepRolls = [];
         //     let tempMax = 0;
         //     for(let i = 0; i < keepNum; i++){
         //         tempMax = Math.max(rolls2);
-        //         keepRolls.push(tempMax);
         //         rolls.push(`\` 🎲${tempMax} \``);
         //         const maxindex = rolls2.indexOf(tempMax);
         //         rolls2.splice(1,maxindex);
