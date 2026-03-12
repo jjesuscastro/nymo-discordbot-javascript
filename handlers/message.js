@@ -10,16 +10,17 @@ async function handleMessage(interaction, config, client) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    const diceRegex = /\{\{(\d+)\}\}/;
+    const diceRegex = /\{\{(\d+)[d](\d+)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
         const numDice = parseInt(match[1]);
+        const sideDice = parseInt(match[3]);
         const rolls = [];
-        const safeNumDice = Math.min(numDice, 20);
+        const safeNumDice = Math.min(numDice, sideDice);
 
         for (let i = 0; i < safeNumDice; i++) {
-            const roll = Math.floor(Math.random() * 20) + 1;
+            const roll = Math.floor(Math.random() * sideDice) + 1;
             rolls.push(`\` 🎲${roll} \``);
         }
         text = text.replace(diceRegex, rolls.join(' '));
