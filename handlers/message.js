@@ -10,20 +10,28 @@ async function handleMessage(interaction, config, client) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    const diceRegex = /\{\{(\d+)[d](\d+)\}\}/;
+    const diceRegex = /\{\{(\d+)[d](\d+)(k?)(\d?)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
         const numDice = parseInt(match[1]);
         const sideDice = parseInt(match[2]);
+        const keep = parseInt(match[3]);
+        const keepNum = parseInt(match[4]);
         const rolls = [];
         const safeNumDice = Math.min(numDice, sideDice);
+
+        if(keep == "k")
+        {}
 
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
             rolls.push(`\` 🎲${roll} \``);
         }
         text = text.replace(diceRegex, rolls.join(' '));
+
+        text += "\n >Rolled:";
+        text += match;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
