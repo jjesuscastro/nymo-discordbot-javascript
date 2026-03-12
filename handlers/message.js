@@ -19,20 +19,23 @@ async function handleMessage(interaction, config, client) {
         const keep = parseInt(match[3]);
         const keepNum = parseInt(match[4]);
         const rolls = [];
+        const rolls2 = [];
         const safeNumDice = Math.min(numDice, sideDice);
 
         if(keep == "k")
-        {}
+        { //fuck man ill eat first
+            }
 
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
             rolls.push(`\` 🎲${roll} \``);
+            rolls2.push(roll);
         }
         text = text.replace(diceRegex, rolls.join(' '));
 
         text += "\n > Rolled: ";
         text += numDice+"d"+sideDice;
-        text += "\n > " + rolls;
+        text += "\n > " + rolls2;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
