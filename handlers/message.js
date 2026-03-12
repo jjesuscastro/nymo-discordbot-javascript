@@ -10,7 +10,7 @@ async function handleMessage(interaction, config, client) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    const diceRegex = /\{\{(\d+)[d](\d+)(\+?)(\d?)(k?)(\d?)\}\}/;
+    const diceRegex = /\{\{(\d+)[d](\d+)(\-?\+?)(\d?)(k?)(\d?)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
@@ -24,18 +24,22 @@ async function handleMessage(interaction, config, client) {
         const rolls2 = [];
         const safeNumDice = Math.min(numDice, sideDice);
 
-        if(keep == "k")
-        { //fuck man ill eat first
-            }
-
         for (let i = 0; i < safeNumDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
             if (diceModifier == "+"){
                 roll += numModifier;
-            }   
+            }
+            if (diceModifier == "-"){
+                roll -= numModifier;
+            }  
             rolls.push(`\` 🎲${roll} \``);
             rolls2.push(roll);
         }
+        
+        if(keep == "k")
+        { 
+        }
+
         text = text.replace(diceRegex, rolls.join(' '));
 
         var diceRoll = match.substring(2, match.length-2);
