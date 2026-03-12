@@ -30,8 +30,9 @@ async function handleMessage(interaction, config, client) {
         }
         text = text.replace(diceRegex, rolls.join(' '));
 
-        text += "\n >Rolled:";
-        text += match;
+        text += "\n > Rolled: ";
+        text += numDice+"d"+sideDice;
+        text += "\n > " + rolls;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
