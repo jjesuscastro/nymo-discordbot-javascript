@@ -11,7 +11,6 @@ async function handleMessage(interaction, config, client) {
     }
 
     const diceRegex = /\{\{(\d+)[d](\d+)(\-?\+?)(\d?)(k?)(\d?)\}\}/;
-    //const diceRegex = /\{\{(\d+)[d](\d+)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
@@ -23,19 +22,22 @@ async function handleMessage(interaction, config, client) {
         const keepNum = parseInt(match[6]);
         const rolls = [];
         const rolls2 = [];
+        var total = 0;
 
         for (let i = 0; i < numDice; i++) {
             const roll = Math.floor(Math.random() * sideDice) + 1;
-            // if (diceModifier == "+"){
-            //     roll += numModifier;
-            // }
-            // if (diceModifier == "-"){
-            //     roll -= numModifier;
-            // }  
-            rolls.push(`\` 🎲${roll} \``);
+            
+            rolls.push(`\`🎲${roll}\``);
             rolls2.push(roll);
+            total+=roll;
         }
-        
+        if (diceModifier == "+"){
+            total += numModifier;
+        }
+        if (diceModifier == "-"){
+            total -= numModifier;
+        }  
+
         // if(keep == "k")
         // { 
         //     rolls = [];
@@ -53,9 +55,9 @@ async function handleMessage(interaction, config, client) {
         const match2 = match[0].toString();
         var diceRoll = match2.substring(2, match2.length-2);
 
-        text += "\n > -# Rolled: ";
-        text += diceRoll;
-        text += "\n > -# " + rolls2;
+        text += "\n > -# " + "**Rolled: ";
+        text += diceRoll + "**";
+        text += "\n > -# " + "[" + rolls2 + "] ➜" + total;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
