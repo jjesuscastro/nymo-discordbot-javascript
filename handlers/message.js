@@ -76,16 +76,16 @@ async function handleMessage(interaction, config, client) {
                 { name: line1, value: line2 }
             );
 
-        text += "\n > " + "**Rolled: ";
-        text += diceRoll + "**";
-        text += "\n > -# " + "[" + rolls2 + "]";
-        if (diceModifier.toString() == "+"){
-            text += "+" + numModifier;
-        }
-        if (diceModifier.toString() == "-"){
-            text += "-" + numModifier;
-        }
-        text += " ➜ " + total;
+        // text += "\n > " + "**Rolled: ";
+        // text += diceRoll + "**";
+        // text += "\n > -# " + "[" + rolls2 + "]";
+        // if (diceModifier.toString() == "+"){
+        //     text += "+" + numModifier;
+        // }
+        // if (diceModifier.toString() == "-"){
+        //     text += "-" + numModifier;
+        // }
+        // text += " ➜ " + total;
     }
 
     const { publicChannel, fakeName, webhookId } = secretConfig;
