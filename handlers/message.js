@@ -1,4 +1,5 @@
 const { MessageFlags } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 async function handleMessage(interaction, config, client) {
     let text = interaction.fields.getTextInputValue('message_text');
@@ -31,8 +32,6 @@ async function handleMessage(interaction, config, client) {
         }
         
         if(keep){
-            if(keep.toString() == "k")
-            {   
                 total = 0;
                 var tempRolls = rolls2.slice();
                 let tempMax = 0;
@@ -42,7 +41,6 @@ async function handleMessage(interaction, config, client) {
                     var maxindex = tempRolls.indexOf(tempMax);
                     tempRolls.splice(1,maxindex);
                     rolls2[maxindex] = rolls[maxindex].toString()+"d";
-                }
             }
         }
 
@@ -61,6 +59,21 @@ async function handleMessage(interaction, config, client) {
 
         const match2 = match[0].toString();
         var diceRoll = match2.substring(2, match2.length-2);
+
+        var line1 = "Rolled: " + diceRoll;
+        var line2 = "[" + rolls2 + "]";
+        if (diceModifier.toString() == "+"){
+            line2 += "+" + numModifier;
+        }
+        if (diceModifier.toString() == "-"){
+            line2 += "-" + numModifier;
+        }
+        line2 += " ➜ " + total;
+
+        const diceEmbed = new EmbedBuilder()
+            .addFields(
+                { name: line1, value: line2}
+            );
 
         text += "\n > " + "**Rolled: ";
         text += diceRoll + "**";
@@ -98,7 +111,7 @@ async function handleMessage(interaction, config, client) {
         await config.save();
     }
 
-    await webhook.send({ content: text });
+    await webhook.send({ content: text, embed: diceEmbed});
 
     const secretChan = client.channels.cache.get(secretChannelId);
     if (secretChan) {
