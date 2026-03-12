@@ -113,7 +113,7 @@ async function handleMessage(interaction, config, client) {
     }
 
     if(match)
-        await webhook.send({ content: text, embeds: diceEmbed });
+        await webhook.send({ content: text, embeds: [diceEmbed] });
     else
         await webhook.send({ content: text });
 
