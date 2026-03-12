@@ -50,7 +50,8 @@ async function handleMessage(interaction, config, client) {
 
         text = text.replace(diceRegex, rolls.join(' '));
 
-        var diceRoll = match.substring(2, match.length-2);
+        const match2 = match.toString();
+        var diceRoll = match2.substring(2, match.length-2);
 
         text += "\n > -# **Rolled:** ";
         text += diceRoll;
