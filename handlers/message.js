@@ -10,17 +10,17 @@ async function handleMessage(interaction, config, client) {
         return interaction.reply({ content: "❌ This channel is not configured as a secret channel.", flags: MessageFlags.Ephemeral });
     }
 
-    //const diceRegex = /\{\{(\d+)[d](\d+)(\-?\+?)(\d?)(k?)(\d?)\}\}/;
-    const diceRegex = /\{\{(\d+)[d](\d+)\}\}/;
+    const diceRegex = /\{\{(\d+)[d](\d+)(\-?\+?)(\d?)(k?)(\d?)\}\}/;
+    //const diceRegex = /\{\{(\d+)[d](\d+)\}\}/;
     const match = text.match(diceRegex);
 
     if (match) {
         const numDice = parseInt(match[1]);
         const sideDice = parseInt(match[2]);
-        // const diceModifier = parseInt(match[3]);
-        // const numModifier = parseInt(match[4]);
-        // const keep = parseInt(match[5]);
-        // const keepNum = parseInt(match[6]);
+        const diceModifier = parseInt(match[3]);
+        const numModifier = parseInt(match[4]);
+        const keep = parseInt(match[5]);
+        const keepNum = parseInt(match[6]);
         const rolls = [];
         const rolls2 = [];
 
@@ -51,7 +51,7 @@ async function handleMessage(interaction, config, client) {
         text = text.replace(diceRegex, rolls.join(' '));
 
         const match2 = match.toString();
-        var diceRoll = match2.substring(2, match.length-2);
+        var diceRoll = match2.substring(2, match2.length-2);
 
         text += "\n > -# **Rolled:** ";
         text += diceRoll;
