@@ -93,7 +93,7 @@ async function handleMessage(interaction, config, client) {
     const { publicChannel, fakeName, webhookId } = secretConfig;
     const publicChan = client.channels.cache.get(publicChannel);
 
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 64 });
 
     let webhook;
     if (webhookId) {
