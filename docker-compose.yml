@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    container_name: nymo-bot
+    restart: unless-stopped
+    environment:
+      - DISCORD_TOKEN
+      - CLIENT_ID
+      - SPREADSHEET_ID
+      - GOOGLE_SERVICE_ACCOUNT_EMAIL
+      - GOOGLE_PRIVATE_KEY
