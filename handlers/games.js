@@ -36,9 +36,12 @@ async function handleRingtoss(interaction) {
     const score = rolls.filter(r => r > 13).length;
     profile.time -= 5;
     await saveProfile(profile);
-    const hstext = "Looks like you didn't beat the highscore...";
+    var hstext = "Looks like you didn't beat the highscore...";
     const prev = await getHighscore('ringtoss', interaction.user.id);
-    if (score > prev) await saveHighscore('ringtoss', interaction.user.id, score);
+    if (score > prev) {
+        await saveHighscore('ringtoss', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
     
     const embed = new EmbedBuilder()
         .setTitle('🎯 Ring Toss')
