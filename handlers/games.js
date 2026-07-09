@@ -97,7 +97,7 @@ async function handleClown(interaction) {
     await saveProfile(profile);
     var hstext = "Looks like you didn't beat the highscore...";
     
-    const prev = await getHighscore('darts', interaction.user.id);
+    const prev = await getHighscore('clown', interaction.user.id);
     if (score > prev){
         await saveHighscore('clown', interaction.user.id, score);
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
