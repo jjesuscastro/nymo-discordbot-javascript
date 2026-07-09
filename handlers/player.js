@@ -90,4 +90,4 @@ async function handleTravel(interaction) {
     });
 }
 
-module.exports = { handleAddMoney, handleDeductTime, handleTravel };
+module.exports = { handleAddMoney, handleDeductTime, handleTravel, handleCheckTime };
