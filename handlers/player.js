@@ -1,4 +1,4 @@
-const { MessageFlags, PermissionsBitField } = require('discord.js');
+const { MessageFlags, PermissionsBitField, EmbedBuilder } = require('discord.js');
 const { getProfile, saveProfile } = require('../services/profiles');
 
 const TRAVEL_COST = {
@@ -70,9 +70,16 @@ async function handleTravel(interaction) {
         return interaction.editReply({ content: '❌ You don\'t have a profile set up yet.' });
     }
 
+    
+
     const origin = profile.location?.toLowerCase();
     if (origin === destination) {
-        return interaction.editReply({ content: `❌ You're already in **${destination}**.` });
+        const embed = new EmbedBuilder()
+                .setTitle('Item Transferred!')
+                .setColor(E63C3C)
+                .setDescription(`❌ You're already in **${destination}**.`);
+
+        return interaction.editReply({ embeds: [embed] });
     }
 
     const cost = origin ? getTravelCost(origin, destination) : 0;
