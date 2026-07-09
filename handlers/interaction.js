@@ -2,7 +2,7 @@ const { getConfig } = require('../config');
 const handleAdmin = require('./admin');
 const { handleAliasModal } = require('./admin');
 const handleMessage = require('./message');
-const { handleRingtoss, handleDarts, handleCrane, handleHighstriker, handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton } = require('./games');
+const { handleRingtoss, handleDarts, handleClown, handleCrane, handleHighstriker, handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton } = require('./games');
 const { handleFood1, handleFood2, handleBuy } = require('./shop');
 const { handleAddMoney, handleDeductTime, handleTravel, handleCheckTime } = require('./player');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
@@ -57,13 +57,14 @@ async function handleInteraction(interaction, client) {
     }
 
     // Minigames
-    if (cmd === 'ringtoss')    return handleRingtoss(interaction);
-    if (cmd === 'darts')       return handleDarts(interaction);
-    if (cmd === 'crane')       return handleCrane(interaction);
-    if (cmd === 'highstriker') return handleHighstriker(interaction);
-    if (cmd === 'luckyduck')   return handleLuckyduck(interaction);
-    if (cmd === 'spinthewheel') return handleSpinthewheel(interaction);
-    if (cmd === 'cointoss')    return handleCointoss(interaction);
+    if (cmd === 'ringtoss')      return handleRingtoss(interaction);
+    if (cmd === 'darts')         return handleDarts(interaction);
+    if (cmd === 'toothknockout') return handleClown(interaction);
+    if (cmd === 'crane')         return handleCrane(interaction);
+    if (cmd === 'highstriker')   return handleHighstriker(interaction);
+    if (cmd === 'luckyduck')     return handleLuckyduck(interaction);
+    if (cmd === 'spinthewheel')  return handleSpinthewheel(interaction);
+    if (cmd === 'cointoss')      return handleCointoss(interaction);
 
     // Shop
     if (cmd === 'food1')  return handleFood1(interaction);

@@ -45,7 +45,7 @@ async function handleRingtoss(interaction) {
     
     const embed = new EmbedBuilder()
         .setTitle('🎯 Ring Toss')
-        .setDescription('Throw 20 rings into the pegs! Rolls above a 13 to score.')
+        .setDescription('Throw 20 rings into the pegs! Roll above a 13 to score.')
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
@@ -65,17 +65,53 @@ async function handleDarts(interaction) {
     const score = rolls.filter(r => r > 15).length;
     profile.time -= 5;
     await saveProfile(profile);
-
+    var hstext = "Looks like you didn't beat the highscore...";
+    
     const prev = await getHighscore('darts', interaction.user.id);
-    if (score > prev) await saveHighscore('darts', interaction.user.id, score);
+    if (score > prev){
+        await saveHighscore('darts', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
 
     const embed = new EmbedBuilder()
-        .setTitle('🎯 Darts')
+        .setTitle('🎯 Dart Throwing')
+        .setDescription('Pop the balloons! You have 10 darts. Roll above a 15 to score.')
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
-            { name: 'Score (rolls > 15)', value: String(score), inline: true },
+            { name: 'Score', value: String(score), inline: true },
             { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
-            { name: 'Time Remaining', value: `${profile.time} min`, inline: true }
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handleClown(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 5);
+    if (!profile) return;
+
+    const rolls = Array.from({ length: 10 }, () => rollD(20));
+    const score = rolls.filter(r => r > 13).length;
+    profile.time -= 5;
+    await saveProfile(profile);
+    var hstext = "Looks like you didn't beat the highscore...";
+    
+    const prev = await getHighscore('darts', interaction.user.id);
+    if (score > prev){
+        await saveHighscore('clown', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
+
+    const embed = new EmbedBuilder()
+        .setTitle('🤡 Clown Tooth Knockout')
+        .setDescription('Knock some teeth out with beanbags! You have 10 bags. Roll above a 13 to score.')
+        .addFields(
+            { name: 'Rolls', value: rolls.join(', ') },
+            { name: 'Score', value: String(score), inline: true },
+            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -234,6 +270,6 @@ async function handleGameButton(interaction) {
 }
 
 module.exports = {
-    handleRingtoss, handleDarts, handleCrane, handleHighstriker,
+    handleRingtoss, handleDarts, handleClown, handleCrane, handleHighstriker,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };

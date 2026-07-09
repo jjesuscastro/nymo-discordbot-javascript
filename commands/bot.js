@@ -30,7 +30,12 @@ const commands = [
 
     new SlashCommandBuilder()
         .setName('darts')
-        .setDescription('Good good aim? Get a bullseye in darts! Highscorer gets the stamp.'),
+        .setDescription('Pop balloons! Highscorer gets the stamp.'),
+        //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
+
+    new SlashCommandBuilder()
+        .setName('toothknockout')
+        .setDescription('Knock out some teeth! Highscorer gets the stamp.'),
         //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
 
     new SlashCommandBuilder()
