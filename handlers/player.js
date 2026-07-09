@@ -62,8 +62,9 @@ async function handleDeductTime(interaction) {
     await saveProfile(profile);
     
     const embed = new EmbedBuilder()
+                .setTitle('🎭 Where has the time gone...')
                 .setColor(0xE63C3C)
-                .setDescription(`Deducted ${amount} min from **${profile.name || target.username}**. \nTime remaining: ${profile.time} min.`);
+                .setDescription(`Deducted ${amount} min from **${profile.name || target.username}**. \nYou have ${profile.time} minutes left...`);
 
     return interaction.editReply({ embeds: [embed] });
 
@@ -95,7 +96,7 @@ async function handleTravel(interaction) {
         const embed = new EmbedBuilder()
                 .setTitle('🎭 Uh oh!')
                 .setColor(0xE63C3C)
-                .setDescription(`❌ Not enough time to travel. Need **${cost} min** but you have **${profile.time} min**.`);
+                .setDescription(`❌ Not enough time to travel... Looks like you're stuck here...`);
 
         return interaction.editReply({ embeds: [embed] });
     }

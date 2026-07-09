@@ -38,6 +38,7 @@ async function handleBuy(interaction) {
 
     if (!found) {
         const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
                 .setColor(0xE63C3C)
                 .setDescription(`❌ **${itemName}** not found in any stall.`);
 
@@ -64,7 +65,7 @@ async function handleBuy(interaction) {
     const embed = new EmbedBuilder()
                 .setTitle('🎭 Yay!')
                 .setColor(0xE63C3C)
-                .setDescription(`✅ You bought **${found.item}** for $${found.price}!\nRemaining balance: $${profile.money}`);
+                .setDescription(`You bought **${found.item}** for $${found.price}!\nRemaining balance: $${profile.money}`);
 
     return interaction.editReply({ embeds: [embed] });
 }
