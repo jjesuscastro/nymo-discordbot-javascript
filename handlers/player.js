@@ -42,7 +42,12 @@ async function handleCheckTime(interaction) {
         return interaction.editReply({ content: `❌ ${target.username} doesn't have a profile.` });
     }
 
-    return interaction.editReply({ content: `Time remaining: ${profile.time} min.` });
+    const embed = new EmbedBuilder()
+                .setTitle('🎭 Tick Tock')
+                .setColor(0xE63C3C)
+                .setDescription(`You have ${profile.time} minutes left.`);
+
+    return interaction.editReply({ embeds: [embed] });
 }
 
 async function handleDeductTime(interaction) {
