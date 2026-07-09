@@ -50,7 +50,7 @@ async function handleRingtoss(interaction) {
             { name: 'Score', value: String(score), inline: true },
             { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
-            { name: `${hstext}`, value: ' ', inline: false }
+            { name: `${hstext}a`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
