@@ -25,40 +25,47 @@ const commands = [
     // --- Minigames ---
     new SlashCommandBuilder()
         .setName('ringtoss')
-        .setDescription('Roll 20 D20s — score is count of rolls above 13. Costs 5 min.'),
+        .setDescription('Toss some rings into the pegs! Highscorer gets the stamp.'),
+        //.setDescription('Roll 20 D20s — score is count of rolls above 13. Costs 5 min.'),
 
     new SlashCommandBuilder()
         .setName('darts')
-        .setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
+        .setDescription('Good good aim? Get a bullseye in darts! Highscorer gets the stamp.'),
+        //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
 
     new SlashCommandBuilder()
         .setName('crane')
-        .setDescription('Roll a D20 — hit exactly 13 to win a prize! Costs 1 min.'),
+        .setDescription('Win a prize from the claw machine! That\'s it.'),
+        //.setDescription('Roll a D20 — hit exactly 13 to win a prize! Costs 1 min.'),
 
     new SlashCommandBuilder()
         .setName('highstriker')
-        .setDescription('Roll a D100 — that is your score. Costs 2 min.'),
+        .setDescription('Strike down with a hammer and measure your strength! Highscorer gets the stamp.'),
+        //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
 
     new SlashCommandBuilder()
         .setName('luckyduck')
-        .setDescription('Pick the lucky number 1–10! Costs 3 min.'),
+        .setDescription('Pick the correct duck out of all these swimming duckies!'),
+        //.setDescription('Pick the lucky number 1–10! Costs 3 min.'),
 
     new SlashCommandBuilder()
         .setName('spinthewheel')
-        .setDescription('Spin the wheel for a random result. Costs 3 min.'),
+        .setDescription('Test your fate. Spin the wheel.'),
+        //.setDescription('Spin the wheel for a random result. Costs 3 min.'),
 
     new SlashCommandBuilder()
         .setName('cointoss')
-        .setDescription('Guess heads or tails! Costs 3 min.'),
+        .setDescription('Heads or Tails?'),
+        //.setDescription('Guess heads or tails! Costs 3 min.'),
 
     // --- Shop ---
     new SlashCommandBuilder()
         .setName('food1')
-        .setDescription('Show items in Stall 1'),
+        .setDescription('View stall1\'s menu!'),
 
     new SlashCommandBuilder()
         .setName('food2')
-        .setDescription('Show items in Stall 2'),
+        .setDescription('View stall2\'s menu!'),
 
     new SlashCommandBuilder()
         .setName('buy')

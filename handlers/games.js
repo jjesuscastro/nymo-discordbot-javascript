@@ -14,7 +14,12 @@ async function requireTime(interaction, discordId, minutes) {
         return null;
     }
     if (profile.time < minutes) {
-        await interaction.editReply({ content: `❌ Not enough time. You need **${minutes} min** but have **${profile.time} min**.` });
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`❌ Not enough time. You need **${minutes} minutes** to play this game.\n There are **${profile.time} minutes** left on the clock`);
+
+        return interaction.editReply({ embeds: [embed] });
         return null;
     }
     return profile;
