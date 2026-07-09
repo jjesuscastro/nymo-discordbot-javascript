@@ -39,7 +39,7 @@ async function handleRingtoss(interaction) {
     const hstext = "Looks like you didn't beat the highscore...";
     const prev = await getHighscore('ringtoss', interaction.user.id);
     if (score > prev){ 
-        await saveHighscore('ringtoss', interaction.user.id, score)
+        await saveHighscore('ringtoss', interaction.user.id, score);
         hstext = ":trophy: Congratulations! You now hold the highscore.";
     }
     
@@ -51,7 +51,7 @@ async function handleRingtoss(interaction) {
             { name: 'Score', value: String(score), inline: true },
             { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
-            { name: `${hstext}a`, value: ' ', inline: false }
+            { name: `${hstext}`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
