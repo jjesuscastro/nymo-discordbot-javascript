@@ -29,6 +29,21 @@ async function handleAddMoney(interaction) {
     return interaction.editReply({ content: `-# Added $${amount} to **${profile.name || target.username}**. New balance: $${profile.money}.` });
 }
 
+async function handleCheckTime(interaction) {
+    await interaction.deferReply();
+    const target = interaction.options.getUser('user');
+
+    const profile = await getProfile(target.id);
+    if (!profile) {
+        return interaction.editReply({ content: `❌ ${target.username} doesn't have a profile.` });
+    }
+
+    profile.money += amount;
+    await saveProfile(profile);
+
+    return interaction.editReply({ content: `Time remaining: ${profile.time} min.` });
+}
+
 async function handleDeductTime(interaction) {
     await interaction.deferReply();
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {

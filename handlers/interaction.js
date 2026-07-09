@@ -72,6 +72,7 @@ async function handleInteraction(interaction, client) {
 
     // Player management
     if (cmd === 'addmoney')    return handleAddMoney(interaction);
+    if (cmd === 'checktime')    return handleCheckTime(interaction);
     if (cmd === 'deducttime')  return handleDeductTime(interaction);
     if (cmd === 'travel')      return handleTravel(interaction);
 }

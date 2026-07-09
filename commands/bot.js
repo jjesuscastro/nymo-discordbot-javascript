@@ -73,6 +73,11 @@ const commands = [
         .addIntegerOption(opt => opt.setName('amount').setDescription('Amount to add').setRequired(true).setMinValue(1)),
 
     new SlashCommandBuilder()
+        .setName('checktime')
+        .setDescription('Check a player\'s remaining time')
+        .addUserOption(opt => opt.setName('user').setDescription('Target player').setRequired(true)),
+
+    new SlashCommandBuilder()
         .setName('deducttime')
         .setDescription('(Admin) Deduct time from a player')
         .addUserOption(opt => opt.setName('user').setDescription('Target player').setRequired(true))
