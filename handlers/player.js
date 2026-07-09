@@ -75,8 +75,7 @@ async function handleTravel(interaction) {
     const origin = profile.location?.toLowerCase();
     if (origin === destination) {
         const embed = new EmbedBuilder()
-                .setTitle('Item Transferred!')
-                .setColor(E63C3C)
+                .setColor(0xE63C3C)
                 .setDescription(`❌ You're already in **${destination}**.`);
 
         return interaction.editReply({ embeds: [embed] });
@@ -85,7 +84,11 @@ async function handleTravel(interaction) {
     const cost = origin ? getTravelCost(origin, destination) : 0;
 
     if (cost > 0 && profile.time < cost) {
-        return interaction.editReply({ content: `❌ Not enough time to travel. Need **${cost} min** but you have **${profile.time} min**.` });
+        const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`❌ Not enough time to travel. Need **${cost} min** but you have **${profile.time} min**.`);
+
+        return interaction.editReply({ embeds: [embed] });
     }
 
     profile.time = Math.max(0, profile.time - cost);
