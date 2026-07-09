@@ -38,9 +38,6 @@ async function handleCheckTime(interaction) {
         return interaction.editReply({ content: `❌ ${target.username} doesn't have a profile.` });
     }
 
-    profile.money += amount;
-    await saveProfile(profile);
-
     return interaction.editReply({ content: `Time remaining: ${profile.time} min.` });
 }
 
