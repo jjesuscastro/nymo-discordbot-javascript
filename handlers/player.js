@@ -64,7 +64,7 @@ async function handleDeductTime(interaction) {
     const embed = new EmbedBuilder()
                 .setTitle('🎭 Where has the time gone...')
                 .setColor(0xE63C3C)
-                .setDescription(`Deducted ${amount} min from **${profile.name || target.username}**. \nYou have ${profile.time} minutes left...`);
+                .setDescription(`Deducted ${amount} minutes from **${profile.name || target.username}**. \nYou have ${profile.time} minutes left...`);
 
     return interaction.editReply({ embeds: [embed] });
 
@@ -108,7 +108,7 @@ async function handleTravel(interaction) {
     const embed = new EmbedBuilder()
                 .setTitle('🎪 Travelling...!')
                 .setColor(0xE63C3C)
-                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${destination}**\nIt took you ${profile.time} minutes...`);
+                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${destination}**\nIt took you ${cost} minutes...`);
 
     return interaction.editReply({ embeds: [embed] });
 }
