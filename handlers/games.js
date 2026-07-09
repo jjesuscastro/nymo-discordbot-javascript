@@ -25,6 +25,8 @@ async function requireTime(interaction, discordId, minutes) {
     return profile;
 }
 
+// --- Precision Games---
+
 async function handleRingtoss(interaction) {
     await interaction.deferReply();
     const profile = await requireTime(interaction, interaction.user.id, 5);
@@ -34,17 +36,21 @@ async function handleRingtoss(interaction) {
     const score = rolls.filter(r => r > 13).length;
     profile.time -= 5;
     await saveProfile(profile);
-
+    const hstext = "Looks like you didn't beat the highscore...";
     const prev = await getHighscore('ringtoss', interaction.user.id);
-    if (score > prev) await saveHighscore('ringtoss', interaction.user.id, score);
+    if (score > prev) await saveHighscore('ringtoss', interaction.user.id, score)
+        const hstext = ":trophy: Congratulations! You now hold the highscore.";
 
+    
     const embed = new EmbedBuilder()
         .setTitle('🎯 Ring Toss')
+        .setDescription('Throw 20 rings into the pegs! Rolls above a 13 to score.')
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
-            { name: 'Score (rolls > 13)', value: String(score), inline: true },
+            { name: 'Score', value: String(score), inline: true },
             { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
-            { name: 'Time Remaining', value: `${profile.time} min`, inline: true }
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
