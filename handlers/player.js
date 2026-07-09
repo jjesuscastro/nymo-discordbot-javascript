@@ -26,8 +26,9 @@ async function handleAddMoney(interaction) {
     profile.money += amount;
     await saveProfile(profile);
     const embed = new EmbedBuilder()
+                .setTitle('💵 Money Given!')
                 .setColor(0xE63C3C)
-                .setDescription(`-# Added $${amount} to **${profile.name || target.username}**. \nNew balance: $${profile.money}.`);
+                .setDescription(`Added $${amount} to **${profile.name || target.username}**. \nNew balance: $${profile.money}`);
 
     return interaction.editReply({ embeds: [embed] });
 }
@@ -92,6 +93,7 @@ async function handleTravel(interaction) {
 
     if (cost > 0 && profile.time < cost) {
         const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
                 .setColor(0xE63C3C)
                 .setDescription(`❌ Not enough time to travel. Need **${cost} min** but you have **${profile.time} min**.`);
 
@@ -103,8 +105,9 @@ async function handleTravel(interaction) {
     await saveProfile(profile);
 
     const embed = new EmbedBuilder()
+                .setTitle('🎪 Travelling...!')
                 .setColor(0xE63C3C)
-                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${destination}** (${cost} min deducted). \nTime remaining: ${profile.time} min.`);
+                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${destination}**\nIt took you ${profile.time} minutes...`);
 
     return interaction.editReply({ embeds: [embed] });
 }

@@ -6,12 +6,12 @@ async function handleFood1(interaction) {
     await interaction.deferReply();
     const items = await getStall(1);
     if (items.length === 0) {
-        return interaction.editReply({ content: '🏪 Stall 1 is currently empty.' });
+        return interaction.editReply({ content: '🎪 Stall 1 is currently empty.' });
     }
     const embed = new EmbedBuilder()
-        .setTitle('🏪 Stall 1')
+        .setTitle('🎪 Stall 1')
         .setColor(0xE63C3C)
-        .setDescription(items.map(i => `**${i.item}**\n*$${i.price}*\n`).join('\n'));
+        .setDescription(items.map(i => `**${i.item}** — *$${i.price}*\n`).join('\n'));
     return interaction.editReply({ embeds: [embed] });
 }
 
@@ -19,12 +19,12 @@ async function handleFood2(interaction) {
     await interaction.deferReply();
     const items = await getStall(2);
     if (items.length === 0) {
-        return interaction.editReply({ content: '🏪 Stall 2 is currently empty.' });
+        return interaction.editReply({ content: '🎪 Stall 2 is currently empty.' });
     }
     const embed = new EmbedBuilder()
-        .setTitle('🏪 Stall 2')
+        .setTitle('🎪 Stall 2')
         .setColor(0xE63C3C)
-        .setDescription(items.map(i => `**${i.item}**\n*$${i.price}*\n`).join('\n'));
+        .setDescription(items.map(i => `**${i.item}** — *$${i.price}*\n`).join('\n'));
     return interaction.editReply({ embeds: [embed] });
 }
 
@@ -39,7 +39,7 @@ async function handleBuy(interaction) {
     if (!found) {
         const embed = new EmbedBuilder()
                 .setColor(0xE63C3C)
-                .setDescription(`❌ Item **${itemName}** not found in any stall.`);
+                .setDescription(`❌ **${itemName}** not found in any stall.`);
 
         return interaction.editReply({ embeds: [embed] });
     }
@@ -50,8 +50,9 @@ async function handleBuy(interaction) {
     }
     if (profile.money < found.price) {
         const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
                 .setColor(0xE63C3C)
-                .setDescription(`❌ Not enough money. **${found.item}** costs $${found.price} but you have $${profile.money}.`);
+                .setDescription(`❌ Not enough money. \n**${found.item}** costs $${found.price} but you have $${profile.money}.`);
 
         return interaction.editReply({ embeds: [embed] });
     }
@@ -61,8 +62,9 @@ async function handleBuy(interaction) {
     await addToInventory(discordId, found.item, 1);
 
     const embed = new EmbedBuilder()
+                .setTitle('🎭 Yay!')
                 .setColor(0xE63C3C)
-                .setDescription(`✅ You bought **${found.item}** for $${found.price}.\nRemaining balance: $${profile.money}.`);
+                .setDescription(`✅ You bought **${found.item}** for $${found.price}!\nRemaining balance: $${profile.money}`);
 
     return interaction.editReply({ embeds: [embed] });
 }
