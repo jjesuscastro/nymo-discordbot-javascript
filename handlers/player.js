@@ -25,8 +25,11 @@ async function handleAddMoney(interaction) {
 
     profile.money += amount;
     await saveProfile(profile);
+    const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`-# Added $${amount} to **${profile.name || target.username}**. \nNew balance: $${profile.money}.`);
 
-    return interaction.editReply({ content: `-# Added $${amount} to **${profile.name || target.username}**. New balance: $${profile.money}.` });
+    return interaction.editReply({ embeds: [embed] });
 }
 
 async function handleCheckTime(interaction) {
@@ -56,8 +59,14 @@ async function handleDeductTime(interaction) {
 
     profile.time = Math.max(0, profile.time - amount);
     await saveProfile(profile);
+    
+    const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`Deducted ${amount} min from **${profile.name || target.username}**. \nTime remaining: ${profile.time} min.`);
 
-    return interaction.editReply({ content: `-# Deducted ${amount} min from **${profile.name || target.username}**. Time remaining: ${profile.time} min.` });
+    return interaction.editReply({ embeds: [embed] });
+
+    return interaction.editReply({ content: `` });
 }
 
 async function handleTravel(interaction) {
@@ -69,8 +78,6 @@ async function handleTravel(interaction) {
     if (!profile) {
         return interaction.editReply({ content: '❌ You don\'t have a profile set up yet.' });
     }
-
-    
 
     const origin = profile.location?.toLowerCase();
     if (origin === destination) {
@@ -95,9 +102,11 @@ async function handleTravel(interaction) {
     profile.location = destination;
     await saveProfile(profile);
 
-    return interaction.editReply({
-        content: `-# **${profile.name || interaction.user.username}** traveled to **${destination}** (${cost} min deducted). Time remaining: ${profile.time} min.`
-    });
+    const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${destination}** (${cost} min deducted). \nTime remaining: ${profile.time} min.`);
+
+    return interaction.editReply({ embeds: [embed] });
 }
 
 module.exports = { handleAddMoney, handleDeductTime, handleTravel, handleCheckTime };

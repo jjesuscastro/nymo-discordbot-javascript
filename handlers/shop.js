@@ -10,7 +10,8 @@ async function handleFood1(interaction) {
     }
     const embed = new EmbedBuilder()
         .setTitle('🏪 Stall 1')
-        .setDescription(items.map(i => `**${i.item}** — $${i.price}`).join('\n'));
+        .setColor(0xE63C3C)
+        .setDescription(items.map(i => `**${i.item}**\n*$${i.price}*\n`).join('\n'));
     return interaction.editReply({ embeds: [embed] });
 }
 
@@ -22,7 +23,8 @@ async function handleFood2(interaction) {
     }
     const embed = new EmbedBuilder()
         .setTitle('🏪 Stall 2')
-        .setDescription(items.map(i => `**${i.item}** — $${i.price}`).join('\n'));
+        .setColor(0xE63C3C)
+        .setDescription(items.map(i => `**${i.item}**\n*$${i.price}*\n`).join('\n'));
     return interaction.editReply({ embeds: [embed] });
 }
 
@@ -35,7 +37,11 @@ async function handleBuy(interaction) {
     const found = [...stall1, ...stall2].find(i => i.item.toLowerCase() === itemName.toLowerCase());
 
     if (!found) {
-        return interaction.editReply({ content: `❌ Item **${itemName}** not found in any stall.` });
+        const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`❌ Item **${itemName}** not found in any stall.`);
+
+        return interaction.editReply({ embeds: [embed] });
     }
 
     const profile = await getProfile(discordId);
@@ -43,14 +49,22 @@ async function handleBuy(interaction) {
         return interaction.editReply({ content: '❌ You don\'t have a profile set up yet.' });
     }
     if (profile.money < found.price) {
-        return interaction.editReply({ content: `❌ Not enough money. **${found.item}** costs $${found.price} but you have $${profile.money}.` });
+        const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`❌ Not enough money. **${found.item}** costs $${found.price} but you have $${profile.money}.`);
+
+        return interaction.editReply({ embeds: [embed] });
     }
 
     profile.money -= found.price;
     await saveProfile(profile);
     await addToInventory(discordId, found.item, 1);
 
-    return interaction.editReply({ content: `✅ You bought **${found.item}** for $${found.price}. Remaining balance: $${profile.money}.` });
+    const embed = new EmbedBuilder()
+                .setColor(0xE63C3C)
+                .setDescription(`✅ You bought **${found.item}** for $${found.price}.\nRemaining balance: $${profile.money}.`);
+
+    return interaction.editReply({ embeds: [embed] });
 }
 
 module.exports = { handleFood1, handleFood2, handleBuy };
