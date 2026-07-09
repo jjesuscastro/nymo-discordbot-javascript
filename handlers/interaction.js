@@ -4,7 +4,7 @@ const { handleAliasModal } = require('./admin');
 const handleMessage = require('./message');
 const { handleRingtoss, handleDarts, handleCrane, handleHighstriker, handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton } = require('./games');
 const { handleFood1, handleFood2, handleBuy } = require('./shop');
-const { handleAddMoney, handleDeductTime, handleTravel } = require('./player');
+const { handleAddMoney, handleDeductTime, handleTravel, handleCheckTime } = require('./player');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 
 async function handleInteraction(interaction, client) {
