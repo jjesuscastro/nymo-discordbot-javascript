@@ -132,8 +132,8 @@ async function handleSunkDuck(interaction) {
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
     }
     if (score > 6){
-        hstext = hstext + "\n Wow! You received a food voucher worth $5!";
-        await addToInventory(discordId, "$5 food voucher", 1);
+        hstext += "\nYou received a food voucher worth $5!";
+        await addToInventory(interaction.user.id, "$5 food voucher", 1);
     }
     
     const embed = new EmbedBuilder()
@@ -163,7 +163,7 @@ async function handleCrane(interaction) {
                 .setDescription(`Looks like there aren't any prizes left in the claw machine.`);
         return interaction.editReply({ embeds: [embed] });
     }
-    
+
     const roll = rollD(20);
     const win = roll === 13;
     profile.time -= 1;
