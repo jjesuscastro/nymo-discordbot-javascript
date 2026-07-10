@@ -39,6 +39,11 @@ const commands = [
         //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
 
     new SlashCommandBuilder()
+        .setName('sunkaduck')
+        .setDescription('Knock a row of rubber duckies! Highscorer gets the stamp.'),
+        //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
+
+    new SlashCommandBuilder()
         .setName('crane')
         .setDescription('Win a prize from the claw machine! That\'s it.'),
         //.setDescription('Roll a D20 — hit exactly 13 to win a prize! Costs 1 min.'),

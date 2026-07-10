@@ -44,7 +44,7 @@ async function handleRingtoss(interaction) {
     }
     
     const embed = new EmbedBuilder()
-        .setTitle('🎯 Ring Toss')
+        .setTitle('⭕ Ring Toss')
         .setDescription('Throw 20 rings into the pegs! Roll above a 13 to score.')
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
@@ -116,11 +116,54 @@ async function handleClown(interaction) {
     return interaction.editReply({ embeds: [embed] });
 }
 
+async function handleSunkDuck(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 5);
+    if (!profile) return;
+
+    const rolls = Array.from({ length: 20 }, () => rollD(20));
+    const score = rolls.filter(r => r > 10).length;
+    profile.time -= 5;
+    await saveProfile(profile);
+    var hstext = "Looks like you didn't beat the highscore...";
+    const prev = await getHighscore('duck', interaction.user.id);
+    if (score > prev) {
+        await saveHighscore('duck', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
+    if (score > 6){
+        hstext = hstext + "\n Wow! You received a food voucher worth $5!";
+        await addToInventory(discordId, "$5 food voucher", 1);
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('🦆 Sunk A Duck')
+        .setDescription('Throw balls and sink some ducks! Roll above a 10 to score.')
+        .addFields(
+            { name: 'Rolls', value: rolls.join(', ') },
+            { name: 'Score', value: String(score), inline: true },
+            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
 async function handleCrane(interaction) {
     await interaction.deferReply();
     const profile = await requireTime(interaction, interaction.user.id, 1);
     if (!profile) return;
 
+    var stock = await getHighscore('crane', interaction.user.id);
+    
+    if(stock === 0){
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`Looks like there aren't any prizes left in the claw machine.`);
+        return interaction.editReply({ embeds: [embed] });
+    }
+    
     const roll = rollD(20);
     const win = roll === 13;
     profile.time -= 1;
@@ -128,17 +171,18 @@ async function handleCrane(interaction) {
 
     let prize = null;
     if (win) {
-        const stall1 = await getStall(1);
-        prize = stall1[0]?.item || 'mystery prize';
-        await addToInventory(interaction.user.id, prize, 1);
+        await addToInventory(interaction.user.id, "$15 food voucher", 1);
+        stock--;
+        await saveHighscore('crane', interaction.user.id, stock);
     }
 
     const embed = new EmbedBuilder()
-        .setTitle('🏗️ Crane Game')
+        .setTitle('🧸 Crane Game')
         .addFields(
             { name: 'Roll', value: String(roll), inline: true },
-            { name: 'Result', value: win ? `🎉 WIN! You got **${prize}**!` : '❌ Miss! Need exactly 13.', inline: true },
-            { name: 'Time Remaining', value: `${profile.time} min`, inline: true }
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: win ? `🎉 You did it! You got a teddy bear!\nAttached to the bear is a $15 food voucher.` : '❌ Better luck next time.', value: ' ', inline: false },
+            { name: ' ', value: win ? `Looks like there's only ${stock} left` : '', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -270,6 +314,6 @@ async function handleGameButton(interaction) {
 }
 
 module.exports = {
-    handleRingtoss, handleDarts, handleClown, handleCrane, handleHighstriker,
+    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleHighstriker,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };

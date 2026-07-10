@@ -2,7 +2,7 @@ const { getConfig } = require('../config');
 const handleAdmin = require('./admin');
 const { handleAliasModal } = require('./admin');
 const handleMessage = require('./message');
-const { handleRingtoss, handleDarts, handleClown, handleCrane, handleHighstriker, handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton } = require('./games');
+const { handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleHighstriker, handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton } = require('./games');
 const { handleFood1, handleFood2, handleBuy } = require('./shop');
 const { handleAddMoney, handleDeductTime, handleTravel, handleCheckTime } = require('./player');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
@@ -60,6 +60,7 @@ async function handleInteraction(interaction, client) {
     if (cmd === 'ringtoss')      return handleRingtoss(interaction);
     if (cmd === 'darts')         return handleDarts(interaction);
     if (cmd === 'toothknockout') return handleClown(interaction);
+    if (cmd === 'sunkaduck')     return handleSunkDuck(interaction);
     if (cmd === 'crane')         return handleCrane(interaction);
     if (cmd === 'highstriker')   return handleHighstriker(interaction);
     if (cmd === 'luckyduck')     return handleLuckyduck(interaction);
