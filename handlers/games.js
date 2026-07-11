@@ -165,7 +165,8 @@ async function handleCrane(interaction) {
     }
 
     const roll = rollD(20);
-    const win = roll === 13;
+    //const win = roll === 13;
+    const win = true;
     profile.time -= 1;
     await saveProfile(profile);
 
@@ -183,6 +184,44 @@ async function handleCrane(interaction) {
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: win ? `🎉 You did it! You got a teddy bear!\nAttached to the bear is a $15 food voucher.` : '❌ Better luck next time.', value: ' ', inline: false },
             { name: ' ', value: win ? `Looks like there's only ${stock} left` : '', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handleBuzzwire(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 5);
+    if (!profile) return;
+
+    const rolls = Array.from({ length: 5 }, () => rollD(20));
+    const score = rolls.filter(r => r > 12).length;
+    profile.time -= 5;
+    await saveProfile(profile);
+    var hstext = "Bzzt! You touched the wire. Try again next time...";
+    const prev = await getHighscore('wire');
+
+    if (prev === 0) {
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`Looks like there aren't any prizes left in the buzz wire game.`);
+        return interaction.editReply({ embeds: [embed] });
+    }
+    if (score === 5){
+        prev -= 1;
+        await saveHighscore('duck', interaction.user.id, prev);
+        hstext = "🎉 You did it! Congratulations!";
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('⚡ Buzz Wire')
+        .setDescription('Pass a ring through the wires without making the ring touch the wire! Every roll must be above 12.')
+        .addFields(
+            { name: 'Rolls', value: rolls.join(', ') },
+            { name: 'Score', value: String(score), inline: true },
+            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -314,6 +353,7 @@ async function handleGameButton(interaction) {
 }
 
 module.exports = {
-    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleHighstriker,
+    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzwire,
+    handleHighstriker,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };
