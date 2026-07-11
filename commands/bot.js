@@ -36,12 +36,10 @@ const commands = [
     new SlashCommandBuilder()
         .setName('toothknockout')
         .setDescription('Knock out some teeth! Highscorer gets the stamp.'),
-        //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
 
     new SlashCommandBuilder()
         .setName('sunkaduck')
         .setDescription('Knock a row of rubber duckies! Highscorer gets the stamp.'),
-        //.setDescription('Roll 10 D20s — score is count of rolls above 15. Costs 5 min.'),
 
     new SlashCommandBuilder()
         .setName('crane')
@@ -50,7 +48,7 @@ const commands = [
 
     new SlashCommandBuilder()
         .setName('buzzwire')
-        .setDescription('Test your steady hands. Pass a ring through wire without them touching'),
+        .setDescription('Test your steady hands. Pass a ring through wire without them touching!'),
 
     new SlashCommandBuilder()
         .setName('highstriker')

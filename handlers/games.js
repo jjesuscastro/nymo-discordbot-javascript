@@ -209,7 +209,7 @@ async function handleBuzzwire(interaction) {
     }
     if (score === 5){
         prev -= 1;
-        await saveHighscore('duck', interaction.user.id, prev);
+        await saveHighscore('wire', interaction.user.id, prev);
         hstext = "🎉 You did it! Congratulations!";
     }
     
@@ -219,7 +219,6 @@ async function handleBuzzwire(interaction) {
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
         );
