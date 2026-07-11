@@ -16,6 +16,7 @@ async function saveHighscore(game, discordId, score) {
     const idx = data.findIndex(r => r[0] === game);
     if (idx >= 0) {
         data[idx][1] = String(score);
+        data[idx][2] = String(discordId);
     } else {
         data.push([game, String(score), discordId]);
     }
