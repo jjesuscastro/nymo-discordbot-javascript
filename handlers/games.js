@@ -188,42 +188,8 @@ async function handleCrane(interaction) {
     return interaction.editReply({ embeds: [embed] });
 }
 
-async function handleBuzzwire(interaction) {
-    await interaction.deferReply();
-    const profile = await requireTime(interaction, interaction.user.id, 8);
-    if (!profile) return;
 
-    const rolls = Array.from({ length: 5 }, () => rollD(20));
-    const score = rolls.filter(r => r > 12).length;
-    profile.time -= 8;
-    await saveProfile(profile);
-    var hstext = "Bzzt! You touched the wire. Try again next time...";
-    const prev = await getHighscore('wire');
-
-    if (prev === 0) {
-        const embed = new EmbedBuilder()
-                .setTitle('🎭 Uh oh!')
-                .setColor(0xE63C3C)
-                .setDescription(`Looks like there aren't any prizes left in the buzz wire game.`);
-        return interaction.editReply({ embeds: [embed] });
-    }
-    if (score === 5){
-        prev -= 1;
-        await saveHighscore('wire', interaction.user.id, prev);
-        hstext = "🎉 You did it! Congratulations!";
-    }
-    
-    const embed = new EmbedBuilder()
-        .setTitle('⚡ Buzz Wire')
-        .setDescription('Pass a ring through the wires without making the ring touch the wire! Every roll must be above 12.')
-        .addFields(
-            { name: 'Rolls', value: rolls.join(', ') },
-            { name: 'Score', value: String(score), inline: true },
-            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
-            { name: `${hstext}`, value: ' ', inline: false }
-        );
-    return interaction.editReply({ embeds: [embed] });
-}
+// --- Strength Games---
 
 async function handleHighstriker(interaction) {
     await interaction.deferReply();
@@ -352,7 +318,7 @@ async function handleGameButton(interaction) {
 }
 
 module.exports = {
-    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzwire,
+    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane,
     handleHighstriker,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };
