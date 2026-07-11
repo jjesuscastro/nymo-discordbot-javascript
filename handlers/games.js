@@ -49,7 +49,7 @@ async function handleRingtoss(interaction) {
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
         );
@@ -79,7 +79,7 @@ async function handleDarts(interaction) {
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
         );
@@ -109,7 +109,7 @@ async function handleClown(interaction) {
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
         );
@@ -142,7 +142,7 @@ async function handleSunkDuck(interaction) {
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
         );
@@ -165,7 +165,7 @@ async function handleCrane(interaction) {
     }
 
     const roll = rollD(20);
-    //const win = roll === 13;
+    const win = roll === 13;
     const win = true;
     profile.time -= 1;
     await saveProfile(profile);
@@ -173,7 +173,7 @@ async function handleCrane(interaction) {
     let prize = null;
     if (win) {
         await addToInventory(interaction.user.id, "$15 food voucher", 1);
-        stock--;
+        stock -= 1;
         await saveHighscore('crane', interaction.user.id, stock);
     }
 
@@ -183,7 +183,7 @@ async function handleCrane(interaction) {
             { name: 'Roll', value: String(roll), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: win ? `🎉 You did it! You got a teddy bear!\nAttached to the bear is a $15 food voucher.` : '❌ Better luck next time.', value: ' ', inline: false },
-            { name: ' ', value: win ? `Looks like there's only ${stock} left` : '', inline: false }
+            { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -219,7 +219,7 @@ async function handleBuzzwire(interaction) {
         .addFields(
             { name: 'Rolls', value: rolls.join(', ') },
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
         );
@@ -242,7 +242,7 @@ async function handleHighstriker(interaction) {
         .setTitle('🔨 High Striker')
         .addFields(
             { name: 'Score', value: String(score), inline: true },
-            { name: 'Personal Best', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true }
         );
     return interaction.editReply({ embeds: [embed] });
