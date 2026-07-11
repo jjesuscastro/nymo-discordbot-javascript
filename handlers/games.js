@@ -37,7 +37,7 @@ async function handleRingtoss(interaction) {
     profile.time -= 5;
     await saveProfile(profile);
     var hstext = "Looks like you didn't beat the highscore...";
-    const prev = await getHighscore('ringtoss', interaction.user.id);
+    const prev = await getHighscore('ringtoss');
     if (score > prev) {
         await saveHighscore('ringtoss', interaction.user.id, score);
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
@@ -67,7 +67,7 @@ async function handleDarts(interaction) {
     await saveProfile(profile);
     var hstext = "Looks like you didn't beat the highscore...";
     
-    const prev = await getHighscore('darts', interaction.user.id);
+    const prev = await getHighscore('darts');
     if (score > prev){
         await saveHighscore('darts', interaction.user.id, score);
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
@@ -97,7 +97,7 @@ async function handleClown(interaction) {
     await saveProfile(profile);
     var hstext = "Looks like you didn't beat the highscore...";
     
-    const prev = await getHighscore('clown', interaction.user.id);
+    const prev = await getHighscore('clown');
     if (score > prev){
         await saveHighscore('clown', interaction.user.id, score);
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
@@ -126,7 +126,7 @@ async function handleSunkDuck(interaction) {
     profile.time -= 5;
     await saveProfile(profile);
     var hstext = "Looks like you didn't beat the highscore...";
-    const prev = await getHighscore('duck', interaction.user.id);
+    const prev = await getHighscore('duck');
     if (score > prev) {
         await saveHighscore('duck', interaction.user.id, score);
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
@@ -154,7 +154,7 @@ async function handleCrane(interaction) {
     const profile = await requireTime(interaction, interaction.user.id, 1);
     if (!profile) return;
 
-    var stock = await getHighscore('crane', interaction.user.id);
+    var stock = await getHighscore('crane');
     
     if(stock === 0){
         const embed = new EmbedBuilder()
@@ -196,7 +196,7 @@ async function handleHighstriker(interaction) {
     profile.time -= 2;
     await saveProfile(profile);
 
-    const prev = await getHighscore('highstriker', interaction.user.id);
+    const prev = await getHighscore('highstriker');
     if (score > prev) await saveHighscore('highstriker', interaction.user.id, score);
 
     const embed = new EmbedBuilder()

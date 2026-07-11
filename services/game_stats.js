@@ -3,9 +3,9 @@ const { readSheet, writeSheet } = require('./sheets');
 const SHEET = 'Games';
 const HEADERS = ['GAME', 'HIGHSCORE', 'PLAYER'];
 
-async function getHighscore(game, discordId) {
+async function getHighscore(game) {
     const rows = await readSheet(SHEET);
-    const row = rows.slice(1).find(r => r[0] === game && r[2] === discordId);
+    const row = rows.slice(1).find(r => r[0] === game);
     return row ? (parseFloat(row[1]) || 0) : 0;
 }
 
