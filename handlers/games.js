@@ -190,12 +190,12 @@ async function handleCrane(interaction) {
 
 async function handleBuzzwire(interaction) {
     await interaction.deferReply();
-    const profile = await requireTime(interaction, interaction.user.id, 5);
+    const profile = await requireTime(interaction, interaction.user.id, 8);
     if (!profile) return;
 
     const rolls = Array.from({ length: 5 }, () => rollD(20));
     const score = rolls.filter(r => r > 12).length;
-    profile.time -= 5;
+    profile.time -= 8;
     await saveProfile(profile);
     var hstext = "Bzzt! You touched the wire. Try again next time...";
     const prev = await getHighscore('wire');

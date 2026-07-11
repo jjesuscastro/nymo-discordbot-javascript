@@ -13,7 +13,7 @@ async function saveHighscore(game, discordId, score) {
     const rows = await readSheet(SHEET);
     const data = rows.slice(1).filter(r => r[0]);
 
-    const idx = data.findIndex(r => r[0] === game && r[2] === discordId);
+    const idx = data.findIndex(r => r[0] === game);
     if (idx >= 0) {
         data[idx][1] = String(score);
     } else {
