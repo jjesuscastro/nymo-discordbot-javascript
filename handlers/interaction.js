@@ -63,7 +63,7 @@ async function handleInteraction(interaction, client) {
     if (cmd === 'toothknockout') return handleClown(interaction);
     if (cmd === 'sunkaduck')     return handleSunkDuck(interaction);
     if (cmd === 'crane')         return handleCrane(interaction);
-    if (cmd === 'buzzwire')      return handleCrane(interaction);
+    if (cmd === 'buzzwire')      return handleBuzzwire(interaction);
     
     if (cmd === 'highstriker')   return handleHighstriker(interaction);
     if (cmd === 'luckyduck')     return handleLuckyduck(interaction);
