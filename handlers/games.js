@@ -220,7 +220,7 @@ async function handleBuzzWire(interaction) {
         .addFields(
             { name: 'Roll', value: String(rolls), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
-            { name: win ? `🎉 You did it!!` : '❌ BZZT. Try again next time.', value: ' ', inline: false },
+            { name: win ? `🎉 You did it!! You get a prize!` : '❌ BZZT. Try again next time.', value: ' ', inline: false },
             { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
@@ -316,6 +316,46 @@ async function handleKickGame(interaction) {
             { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handleExcalibur(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 2);
+    if (!profile) return;
+
+    
+    var stock = await getHighscore('excalibur');
+    
+    if(stock === 0){
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`Looks like there aren't any prizes left for this game.`);
+        return interaction.editReply({ embeds: [embed] });
+    }
+
+    const roll = rollD(50);
+    const win = roll > 40;
+    profile.time -= 2;
+    await saveProfile(profile);
+
+    var hstext = "The sword is just stuck there...";
+    
+    if (win) {
+        stock -= 1;
+        await saveHighscore('excalibur', interaction.user.id, stock);
+        hstext = "\:trophy\: You pulled the sword out of the stone! You get a prize!";
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('👟 Kick Game')
+        .addFields(
+            { name: 'Score', value: String(roll), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false },
+            { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -428,6 +468,6 @@ async function handleGameButton(interaction) {
 
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
-    handleHighstriker, handlePunchingBag, handleKickGame,
+    handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };

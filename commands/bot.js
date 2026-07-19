@@ -62,6 +62,16 @@ const commands = [
         //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
 
     new SlashCommandBuilder()
+        .setName('kickgame')
+        .setDescription('Measure your kicks! Highscorer gets the stamp.'),
+        //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
+
+    new SlashCommandBuilder()
+        .setName('excalibur')
+        .setDescription('Pull the sword out of the stone!'),
+        //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
+
+    new SlashCommandBuilder()
         .setName('luckyduck')
         .setDescription('Pick the correct duck out of all these swimming duckies!'),
         //.setDescription('Pick the lucky number 1–10! Costs 3 min.'),
