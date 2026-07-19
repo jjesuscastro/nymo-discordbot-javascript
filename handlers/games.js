@@ -187,6 +187,44 @@ async function handleCrane(interaction) {
     return interaction.editReply({ embeds: [embed] });
 }
 
+async function handleBuzzWire(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 1);
+    if (!profile) return;
+
+    var stock = await getHighscore('buzz');
+
+    const rolls = Array.from({ length: 5 }, () => rollD(20));
+    const score = rolls.filter(r => r > 12).length;
+
+    if(stock === 0){
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`Looks like there aren't any prizes left for the buzz wire game.`);
+        return interaction.editReply({ embeds: [embed] });
+    }
+
+    const win = score === 5;
+    profile.time -= 8;
+    await saveProfile(profile);
+
+    let prize = null;
+    if (win) {
+        stock -= 1;
+        await saveHighscore('buzz', interaction.user.id, stock);
+    }
+
+    const embed = new EmbedBuilder()
+        .setTitle('⚡ Buzz Wire')
+        .addFields(
+            { name: 'Roll', value: String(roll), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: win ? `🎉 You did it!!` : '❌ BZZT. Try again next time.', value: ' ', inline: false },
+            { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
 
 // --- Strength Games---
 
@@ -317,7 +355,7 @@ async function handleGameButton(interaction) {
 }
 
 module.exports = {
-    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane,
+    handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
     handleHighstriker,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };

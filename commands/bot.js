@@ -47,6 +47,11 @@ const commands = [
         //.setDescription('Roll a D20 — hit exactly 13 to win a prize! Costs 1 min.'),
 
     new SlashCommandBuilder()
+        .setName('buzzwire')
+        .setDescription('Test your steady hands! Move a ring through the wires without making it touch.'),
+        //.setDescription('Roll a D20 — hit exactly 13 to win a prize! Costs 1 min.'),
+
+    new SlashCommandBuilder()
         .setName('highstriker')
         .setDescription('Strike down with a hammer and measure your strength! Highscorer gets the stamp.'),
         //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
