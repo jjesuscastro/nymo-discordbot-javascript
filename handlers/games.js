@@ -244,6 +244,10 @@ async function handleHighstriker(interaction) {
         await saveHighscore('highstriker', interaction.user.id, score);
         hstext = "\:trophy\: Congratulations! You now hold the highscore.";
     }
+    if(score > 70){
+        hstext += "\nYou received a food voucher worth $15!";
+        await addToInventory(interaction.user.id, "$15 food voucher", 1);
+    }
     
     const embed = new EmbedBuilder()
         .setTitle('🔨 High Striker')
@@ -275,6 +279,38 @@ async function handlePunchingBag(interaction) {
 
     const embed = new EmbedBuilder()
         .setTitle('🥊 Pucnhing Bag')
+        .addFields(
+            { name: 'Score', value: String(score), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handleKickGame(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 2);
+    if (!profile) return;
+
+    const score = rollD(50);
+    profile.time -= 2;
+    await saveProfile(profile);
+
+    var hstext = "Looks like you didn't beat the highscore...";
+    const prev = await getHighscore('kick');
+    
+    if (score > prev) {
+        await saveHighscore('kick', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
+    if(score > 20){
+        hstext += "\nYou received a food voucher worth $5!";
+        await addToInventory(interaction.user.id, "$5 food voucher", 1);
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('👟 Kick Game')
         .addFields(
             { name: 'Score', value: String(score), inline: true },
             { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
@@ -392,6 +428,6 @@ async function handleGameButton(interaction) {
 
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
-    handleHighstriker, handlePunchingBag,
+    handleHighstriker, handlePunchingBag, handleKickGame,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };
