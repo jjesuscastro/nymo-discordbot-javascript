@@ -195,7 +195,7 @@ async function handleBuzzWire(interaction) {
     var stock = await getHighscore('buzz');
 
     const rolls = Array.from({ length: 5 }, () => rollD(20));
-    const score = rolls.filter(r => r > 12).length;
+    const score = rolls.filter(r => r > 10).length;
 
     if(stock === 0){
         const embed = new EmbedBuilder()
@@ -237,18 +237,54 @@ async function handleHighstriker(interaction) {
     profile.time -= 2;
     await saveProfile(profile);
 
+    var hstext = "Looks like you didn't beat the highscore...";
     const prev = await getHighscore('highstriker');
-    if (score > prev) await saveHighscore('highstriker', interaction.user.id, score);
-
+    
+    if (score > prev) {
+        await saveHighscore('highstriker', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
+    
     const embed = new EmbedBuilder()
         .setTitle('🔨 High Striker')
         .addFields(
             { name: 'Score', value: String(score), inline: true },
             { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
-            { name: 'Time Remaining', value: `${profile.time} min`, inline: true }
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
+
+async function handlePunchingBag(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 2);
+    if (!profile) return;
+
+    const score = rollD(50);
+    profile.time -= 2;
+    await saveProfile(profile);
+
+    const prev = await getHighscore('punch');
+    var hstext = "Looks like you didn't beat the highscore...";
+    
+    if (score > prev) {
+        await saveHighscore('punch', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
+
+    const embed = new EmbedBuilder()
+        .setTitle('🥊 Pucnhing Bag')
+        .addFields(
+            { name: 'Score', value: String(score), inline: true },
+            { name: 'Highscore', value: String(Math.max(score, prev)), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+// --- Luck Games---
 
 async function handleLuckyduck(interaction) {
     await interaction.deferReply({ flags: 64 });
@@ -356,6 +392,6 @@ async function handleGameButton(interaction) {
 
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
-    handleHighstriker,
+    handleHighstriker, handlePunchingBag,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };

@@ -57,6 +57,11 @@ const commands = [
         //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
 
     new SlashCommandBuilder()
+        .setName('punchingbag')
+        .setDescription('Punch as hard as you can! Highscorer gets the stamp.'),
+        //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
+
+    new SlashCommandBuilder()
         .setName('luckyduck')
         .setDescription('Pick the correct duck out of all these swimming duckies!'),
         //.setDescription('Pick the lucky number 1–10! Costs 3 min.'),
