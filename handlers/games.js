@@ -218,7 +218,7 @@ async function handleBuzzWire(interaction) {
     const embed = new EmbedBuilder()
         .setTitle('⚡ Buzz Wire')
         .addFields(
-            { name: 'Roll', value: String(roll), inline: true },
+            { name: 'Roll', value: String(rolls), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: win ? `🎉 You did it!!` : '❌ BZZT. Try again next time.', value: ' ', inline: false },
             { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
