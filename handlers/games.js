@@ -166,7 +166,6 @@ async function handleCrane(interaction) {
 
     const roll = rollD(20);
     const win = roll === 13;
-    const win = true;
     profile.time -= 1;
     await saveProfile(profile);
 
