@@ -369,7 +369,7 @@ async function handleTrueGrip(interaction) {
     var prev = await getHighscore('truegrip');
 
     const rolls = Array.from({ length: 10 }, () => rollD(20));
-    const score = 0;
+    var score = 0;
     
     for (let i = 0; i < 10; i++) {
         if(rolls[i] >= 10)
