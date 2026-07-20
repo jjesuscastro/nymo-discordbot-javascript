@@ -350,12 +350,52 @@ async function handleExcalibur(interaction) {
     }
     
     const embed = new EmbedBuilder()
-        .setTitle('👟 Kick Game')
+        .setTitle('⚔️ Excalibur')
         .addFields(
             { name: 'Score', value: String(roll), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: `${hstext}`, value: ' ', inline: false },
             { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handleTrueGrip(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 2);
+    if (!profile) return;
+
+    
+    var prev = await getHighscore('truegrip');
+
+    const rolls = Array.from({ length: 10 }, () => rollD(20));
+    const score = 0;
+    
+    for (let i = 0; i < 10; i++) {
+        if(rolls[i] >= 10)
+            score += 1;
+        else
+            break;
+    }
+
+    const win = score == 10;
+    profile.time -= score;
+    await saveProfile(profile);
+
+    var hstext = "Look like you didn't beat the highscore...";
+    if (score > prev){
+        await saveHighscore('truegrip', interaction.user.id, score);
+        hstext = "\:trophy\: Congratulations! You now hold the highscore.";
+    }
+    if (win) hstext += "\nYou got the maximum time!";
+    
+    const embed = new EmbedBuilder()
+        .setTitle('✊ True Grip')
+        .addFields(
+            { name: 'Score', value: String(roll), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: ' ', value: `You managed to hold on for ${score} minutes.`, inline: false },
+            { name: win ? `${hstext}` : '', value: ' ', inline: false },
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -468,6 +508,6 @@ async function handleGameButton(interaction) {
 
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
-    handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur,
+    handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur, handleTrueGrip,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };
