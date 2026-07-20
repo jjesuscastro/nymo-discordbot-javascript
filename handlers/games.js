@@ -380,7 +380,7 @@ async function handleTrueGrip(interaction) {
         }
     }
 
-    const win = score == 10;
+    const win = score === 10;
     profile.time -= score;
     await saveProfile(profile);
 
@@ -397,7 +397,7 @@ async function handleTrueGrip(interaction) {
             { name: 'Score', value: String(rolls), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: ' ', value: `You managed to hold on for ${score} minutes.`, inline: false },
-            { name: win ? `${hstext}` : '', value: ' ', inline: false }
+            { name: `${hstext}`, value: ' ', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
