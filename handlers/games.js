@@ -374,8 +374,10 @@ async function handleTrueGrip(interaction) {
     for (let i = 0; i < 10; i++) {
         if(rolls[i] >= 10)
             score += 1;
-        else
+        else{
+            rolls.length = i;
             break;
+        }
     }
 
     const win = score == 10;
@@ -392,7 +394,7 @@ async function handleTrueGrip(interaction) {
     const embed = new EmbedBuilder()
         .setTitle('✊ True Grip')
         .addFields(
-            { name: 'Score', value: String(roll), inline: true },
+            { name: 'Score', value: String(rolls), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: ' ', value: `You managed to hold on for ${score} minutes.`, inline: false },
             { name: win ? `${hstext}` : '', value: ' ', inline: false }
