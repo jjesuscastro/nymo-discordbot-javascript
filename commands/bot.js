@@ -73,7 +73,12 @@ const commands = [
 
     new SlashCommandBuilder()
         .setName('truegrip')
-        .setDescription('Grip onto the metal bars for as long as you can!'),
+        .setDescription('Grip onto the metal bars for as long as you can! Highscorer gets the stamp.'),
+        //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
+
+    new SlashCommandBuilder()
+        .setName('tugofwar')
+        .setDescription('Pull as hard as you can! Highscorer gets the stamp.'),
         //.setDescription('Roll a D100 — that is your score. Costs 2 min.'),
 
     new SlashCommandBuilder()

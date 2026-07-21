@@ -394,10 +394,50 @@ async function handleTrueGrip(interaction) {
     const embed = new EmbedBuilder()
         .setTitle('✊ True Grip')
         .addFields(
-            { name: 'Score', value: String(rolls), inline: true },
+            { name: 'Rolls', value: String(rolls), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
             { name: ' ', value: `You managed to hold on for ${score} minutes.`, inline: false },
             { name: `${hstext}`, value: ' ', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handleTugofWar(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 2);
+    if (!profile) return;
+
+    
+    var stock = await getHighscore('tugofwar');
+    
+    if(stock === 0){
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`Looks like there aren't any prizes left for this game.`);
+        return interaction.editReply({ embeds: [embed] });
+    }
+
+    const roll = rollD(100);
+    const win = roll > 60;
+    profile.time -= 2;
+    await saveProfile(profile);
+
+    var hstext = "You can't pull hard enough... the rope doesn't budge...";
+    
+    if (win) {
+        stock -= 1;
+        await saveHighscore('tugofwar', interaction.user.id, stock);
+        hstext = "\:trophy\: YOU PULLED! You get a prize!";
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('🪢 Tug Of War')
+        .addFields(
+            { name: 'Score', value: String(roll), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false },
+            { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
         );
     return interaction.editReply({ embeds: [embed] });
 }
@@ -510,6 +550,6 @@ async function handleGameButton(interaction) {
 
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
-    handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur, handleTrueGrip,
+    handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur, handleTrueGrip, handleTugofWar,
     handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
 };
