@@ -463,8 +463,13 @@ async function handleLuckyduck(interaction) {
         );
     }
 
+     const embed = new EmbedBuilder()
+        .setTitle('🦆 Lucky Duck')
+        .setDescription('Choose the right duck! There are 10 in front of you.');
+
     return interaction.editReply({
-        content: `🦆 **Lucky Duck!** Pick a number 1–10.\n-# Time remaining: ${profile.time} min`,
+        embeds: [embed],
+        //content: `🦆 **Lucky Duck!** Pick a number 1–10.\n-# Time remaining: ${profile.time} min`,
         components: [
             new ActionRowBuilder().addComponents(buttons.slice(0, 5)),
             new ActionRowBuilder().addComponents(buttons.slice(5))
