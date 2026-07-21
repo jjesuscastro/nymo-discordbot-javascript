@@ -611,6 +611,11 @@ async function handleGameButton(interaction) {
     await interaction.update({ content: interaction.message.content, components: disabledRows });
 
     if (game === 'luckyduck') {
+
+        var stock = await getHighscore('luckyduck');
+        stock -= 1;
+        await saveHighscore('luckyduck', interaction.user.id, stock);
+
         if(correct){
             const embed = new EmbedBuilder()
                 .setTitle('🦆 Correct!')
@@ -628,6 +633,11 @@ async function handleGameButton(interaction) {
 
     if (game === 'cointoss') {
         if(correct){
+
+            var stock = await getHighscore('cointoss');
+            stock -= 1;
+            await saveHighscore('cointoss', interaction.user.id, stock);
+
             const embed = new EmbedBuilder()
                 .setTitle('🪙 Correct!')
                 .setDescription(`It was **${answer}**! 🎉`);
