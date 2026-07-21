@@ -535,12 +535,15 @@ async function handleGameButton(interaction) {
     await interaction.update({ content: interaction.message.content, components: disabledRows });
 
     if (game === 'luckyduck') {
-        return interaction.followUp({
-            content: correct
-                ? `🦆 **Correct!** The number was **${answer}**! 🎉`
-                : `🦆 **Wrong!** The number was **${answer}**. Better luck next time!`,
-            flags: MessageFlags.Ephemeral
-        });
+        if (correct)
+            const embed = new EmbedBuilder()
+                .setTitle('🦆 Correct!')
+                .setDescription(`The number was **${answer}**! 🎉`);
+        else
+            const embed = new EmbedBuilder()
+                .setTitle('🦆 Wrong!')
+                .setDescription(`The number was **${answer}**. Better luck next time!`);
+        return interaction.followUp({ embeds: [embed] });
     }
 
     if (game === 'cointoss') {
