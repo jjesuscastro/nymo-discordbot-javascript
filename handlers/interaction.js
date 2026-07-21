@@ -77,6 +77,7 @@ async function handleInteraction(interaction, client) {
     if (cmd === 'spinthewheel')  return handleSpinthewheel(interaction);
     if (cmd === 'plinkodisk')    return handlePlinkoDisc(interaction);
     if (cmd === 'cointoss')      return handleCointoss(interaction);
+    if (cmd === 'dicegame')      return handleDiceGame(interaction);
 
     // Shop
     if (cmd === 'food1')  return handleFood1(interaction);

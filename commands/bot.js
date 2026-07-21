@@ -101,6 +101,11 @@ const commands = [
         .setDescription('Heads or Tails?'),
         //.setDescription('Guess heads or tails! Costs 3 min.'),
 
+    new SlashCommandBuilder()
+        .setName('dicegame')
+        .setDescription('Roll a double to win.'),
+        //.setDescription('Guess heads or tails! Costs 3 min.'),
+
     // --- Shop ---
     new SlashCommandBuilder()
         .setName('food1')

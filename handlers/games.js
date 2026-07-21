@@ -524,7 +524,7 @@ async function handlePlinkoDisc(interaction) {
 }
 
 async function handleCointoss(interaction) {
-    await interaction.deferReply({ flags: 64 });
+    await interaction.deferReply();
     const profile = await requireTime(interaction, interaction.user.id, 3);
     if (!profile) return;
 
@@ -543,10 +543,54 @@ async function handleCointoss(interaction) {
             .setStyle(ButtonStyle.Primary)
     );
 
+    const embed = new EmbedBuilder()
+        .setTitle('🪙 Coin Toss')
+        .setDescription('Heads or Tails?');
+
     return interaction.editReply({
-        content: `🪙 **Coin Toss!** Heads or Tails?\n-# Time remaining: ${profile.time} min`,
+        embeds: [embed],
+        //content: `**Coin Toss!** Heads or Tails?\n-# Time remaining: ${profile.time} min`,
         components: [row]
     });
+}
+
+async function handleDiceGame(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 2);
+    if (!profile) return;
+
+    var stock = await getHighscore('dicegame');
+    
+    if(stock === 0){
+        const embed = new EmbedBuilder()
+                .setTitle('🎭 Uh oh!')
+                .setColor(0xE63C3C)
+                .setDescription(`Looks like there aren't any prizes left for this game.`);
+        return interaction.editReply({ embeds: [embed] });
+    }
+
+    const rolls = Array.from({ length: 2 }, () => rollD(6));
+    const win = rolls[0] === rolls[1];
+    profile.time -= 1;
+    await saveProfile(profile);
+
+    var hstext = "Better luck next time!";
+    
+    if (win) {
+        stock -= 1;
+        await saveHighscore('dicegame', interaction.user.id, stock);
+        hstext = "\:trophy\: You rolled a double!";
+    }
+    
+    const embed = new EmbedBuilder()
+        .setTitle('🪢 Tug Of War')
+        .addFields(
+            { name: 'Dice Rolls', value: String(rolls), inline: true },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
+            { name: `${hstext}`, value: ' ', inline: false },
+            { name: ' ', value: win ? `Looks like there's ${stock} left` : '', inline: false }
+        );
+    return interaction.editReply({ embeds: [embed] });
 }
 
 async function handleGameButton(interaction) {
@@ -583,12 +627,24 @@ async function handleGameButton(interaction) {
     }
 
     if (game === 'cointoss') {
-        return interaction.followUp({
-            content: correct
-                ? `🪙 **Correct!** It was **${answer}**! 🎉`
-                : `🪙 **Wrong!** It was **${answer}**. Better luck next time!`,
-            flags: MessageFlags.Ephemeral
-        });
+        if(correct){
+            const embed = new EmbedBuilder()
+                .setTitle('🪙 Correct!')
+                .setDescription(`It was **${answer}**! 🎉`);
+            return interaction.followUp({ embeds: [embed] });
+        }
+        else{
+            const embed = new EmbedBuilder()
+                .setTitle('🪙 Wrong!')
+                .setDescription(`It was **${answer}**. Better luck next time!`);
+            return interaction.followUp({ embeds: [embed] });
+        }
+
+        // return interaction.followUp({
+        //     content: correct
+        //         ? ` **Correct!** It was **${answer}**! 🎉`
+        //         : `🪙 **Wrong!** It was **${answer}**. Better luck next time!`,
+        // });
     }
 }
 
