@@ -92,6 +92,11 @@ const commands = [
         //.setDescription('Spin the wheel for a random result. Costs 3 min.'),
 
     new SlashCommandBuilder()
+        .setName('plinkodisk')
+        .setDescription('Test your fate. Drop the disk.'),
+        //.setDescription('Spin the wheel for a random result. Costs 3 min.'),
+
+    new SlashCommandBuilder()
         .setName('cointoss')
         .setDescription('Heads or Tails?'),
         //.setDescription('Guess heads or tails! Costs 3 min.'),

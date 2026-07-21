@@ -482,8 +482,8 @@ async function handleSpinthewheel(interaction) {
     const profile = await requireTime(interaction, interaction.user.id, 3);
     if (!profile) return;
 
-    const prizes = ["Try Again next time", "Try Again next time", "Try Again next time", "Try Again next time", "Try Again next time",
-                    "You won a $20 food voucher!", "You won a $10 food voucher!", "You won a $10 food voucher!",
+    const prizes = ["Nothing! Try Again next time", "Nothing! Try Again next time", "Nothing! Try Again next time", "Nothing! Try Again next time", "Nothing! Try Again next time",
+                    "A $20 food voucher!", "A $10 food voucher!", "A $10 food voucher!",
                     "Winner! You get a prize!", "Winner! You get a prize!" ];
     const result = Math.floor(Math.random() * 10);
     profile.time -= 3;
@@ -491,6 +491,29 @@ async function handleSpinthewheel(interaction) {
 
     const embed = new EmbedBuilder()
         .setTitle('🎊 Spin the Wheel')
+        .setDescription('you got......')
+        .addFields(
+            { name: `${prizes[result]}`, value: '', inline: false },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: false }
+        );
+
+    return interaction.editReply({ embeds: [embed] });
+}
+
+async function handlePlinkoDisc(interaction) {
+    await interaction.deferReply();
+    const profile = await requireTime(interaction, interaction.user.id, 3);
+    if (!profile) return;
+
+    const prizes = ["Nothing! Try Again next time", "Nothing! Try Again next time", "Nothing! Try Again next time", "Nothing! Try Again next time", "Nothing! Try Again next time",
+                    "A $20 food voucher!", "A $10 food voucher!", "A $10 food voucher!",
+                    "Winner! You get a prize!", "Winner! You get a prize!" ];
+    const result = Math.floor(Math.random() * 10);
+    profile.time -= 3;
+    await saveProfile(profile);
+
+    const embed = new EmbedBuilder()
+        .setTitle('🎊 Plinko Drop Game')
         .setDescription('you got......')
         .addFields(
             { name: `${prizes[result]}`, value: '', inline: false },
@@ -572,5 +595,5 @@ async function handleGameButton(interaction) {
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
     handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur, handleTrueGrip, handleTugofWar,
-    handleLuckyduck, handleSpinthewheel, handleCointoss, handleGameButton
+    handleLuckyduck, handleSpinthewheel, handlePlinkoDisc, handleCointoss, handleGameButton
 };
