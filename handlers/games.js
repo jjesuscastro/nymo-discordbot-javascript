@@ -535,14 +535,16 @@ async function handleGameButton(interaction) {
     await interaction.update({ content: interaction.message.content, components: disabledRows });
 
     if (game === 'luckyduck') {
-        if (correct)
+        if (correct){
             const embed = new EmbedBuilder()
                 .setTitle('🦆 Correct!')
                 .setDescription(`The number was **${answer}**! 🎉`);
-        else
+        }
+        else{
             const embed = new EmbedBuilder()
                 .setTitle('🦆 Wrong!')
                 .setDescription(`The number was **${answer}**. Better luck next time!`);
+        }
         return interaction.followUp({ embeds: [embed] });
     }
 
