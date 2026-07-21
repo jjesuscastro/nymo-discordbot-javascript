@@ -445,7 +445,7 @@ async function handleTugofWar(interaction) {
 // --- Luck Games---
 
 async function handleLuckyduck(interaction) {
-    await interaction.deferReply({ flags: 64 });
+    await interaction.deferReply();
     const profile = await requireTime(interaction, interaction.user.id, 3);
     if (!profile) return;
 
