@@ -463,7 +463,7 @@ async function handleLuckyduck(interaction) {
         );
     }
 
-     const embed = new EmbedBuilder()
+    const embed = new EmbedBuilder()
         .setTitle('🦆 Lucky Duck')
         .setDescription('Choose the right duck! There are 10 in front of you.');
 
@@ -482,13 +482,22 @@ async function handleSpinthewheel(interaction) {
     const profile = await requireTime(interaction, interaction.user.id, 3);
     if (!profile) return;
 
-    const result = Math.floor(Math.random() * 10) + 1;
+    const prizes = ["Try Again next time", "Try Again next time", "Try Again next time", "Try Again next time", "Try Again next time",
+                    "You won a $20 food voucher!", "You won a $10 food voucher!", "You won a $10 food voucher!",
+                    "Winner! You get a prize!", "Winner! You get a prize!" ];
+    const result = Math.floor(Math.random() * 10);
     profile.time -= 3;
     await saveProfile(profile);
 
-    return interaction.editReply({
-        content: `🎡 **Spin the Wheel!** You landed on: **message ${result}**\n-# Time remaining: ${profile.time} min`
-    });
+    const embed = new EmbedBuilder()
+        .setTitle('🎊 Spin the Wheel')
+        .setDescription('you got......')
+        .addFields(
+            { name: `${prizes[result]}`, value: '', inline: false },
+            { name: 'Time Remaining', value: `${profile.time} min`, inline: false }
+        );
+
+    return interaction.editReply({ embeds: [embed] });
 }
 
 async function handleCointoss(interaction) {
