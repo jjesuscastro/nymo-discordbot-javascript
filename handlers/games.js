@@ -661,5 +661,5 @@ async function handleGameButton(interaction) {
 module.exports = {
     handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
     handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur, handleTrueGrip, handleTugofWar,
-    handleLuckyduck, handleSpinthewheel, handlePlinkoDisc, handleCointoss, handleGameButton
+    handleLuckyduck, handleSpinthewheel, handlePlinkoDisc, handleCointoss, handleGameButton, handleDiceGame
 };
