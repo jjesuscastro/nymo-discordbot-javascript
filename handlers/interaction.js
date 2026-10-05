@@ -4,7 +4,7 @@ const { handleAliasModal } = require('./admin');
 const handleMessage = require('./message');
 const { handleRingtoss, handleDarts, handleClown, handleSunkDuck, handleCrane, handleBuzzWire,
     handleHighstriker, handlePunchingBag, handleKickGame, handleExcalibur, handleTrueGrip, handleTugofWar,
-    handleLuckyduck, handleSpinthewheel, handlePlinkoDisc, handleCointoss, handleGameButton } = require('./games');
+    handleLuckyduck, handleSpinthewheel, handlePlinkoDisc, handleCointoss, handleDiceGame, handleGameButton } = require('./games');
 const { handleFood1, handleFood2, handleBuy } = require('./shop');
 const { handleAddMoney, handleDeductTime, handleTravel, handleCheckTime } = require('./player');
 const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
