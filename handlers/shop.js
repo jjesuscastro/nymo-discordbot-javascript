@@ -9,7 +9,7 @@ async function handleFood1(interaction) {
         return interaction.editReply({ content: '🎪 Stall 1 is currently empty.' });
     }
     const embed = new EmbedBuilder()
-        .setTitle('🎪 Stall 1')
+        .setTitle('🎪 Chups Chow')
         .setColor(0xE63C3C)
         .setDescription(items.map(i => `**${i.item}** — *$${i.price}*\n`).join('\n'));
     return interaction.editReply({ embeds: [embed] });
@@ -22,7 +22,7 @@ async function handleFood2(interaction) {
         return interaction.editReply({ content: '🎪 Stall 2 is currently empty.' });
     }
     const embed = new EmbedBuilder()
-        .setTitle('🎪 Stall 2')
+        .setTitle('🎪 Frog Fare')
         .setColor(0xE63C3C)
         .setDescription(items.map(i => `**${i.item}** — *$${i.price}*\n`).join('\n'));
     return interaction.editReply({ embeds: [embed] });
