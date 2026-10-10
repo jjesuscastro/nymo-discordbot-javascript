@@ -109,11 +109,11 @@ const commands = [
     // --- Shop ---
     new SlashCommandBuilder()
         .setName('food1')
-        .setDescription('View stall1\'s menu!'),
+        .setDescription('View chup chow\'s menu!'),
 
     new SlashCommandBuilder()
         .setName('food2')
-        .setDescription('View stall2\'s menu!'),
+        .setDescription('View frog fare\'s menu!'),
 
     new SlashCommandBuilder()
         .setName('buy')

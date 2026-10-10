@@ -85,7 +85,19 @@ async function handleTravel(interaction) {
     if (!profile) {
         return interaction.editReply({ content: '❌ You don\'t have a profile set up yet.' });
     }
+    var name = "";
 
+    if (destination == "north")
+        name = "dreamy dove demesne";
+    if (destination == "south")
+        name = "teddy bear trove";
+    if (destination == "west")
+        name = "froggy forest park";
+    if (destination == "east")
+        name = "dog's delightful desserts";
+    if (destination == "center")
+        name = "cheerful chipmunk circus";
+    
     const origin = profile.location?.toLowerCase();
     if (origin === destination) {
         const embed = new EmbedBuilder()
