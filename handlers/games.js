@@ -583,7 +583,7 @@ async function handleDiceGame(interaction) {
     }
     
     const embed = new EmbedBuilder()
-        .setTitle('🪢 Tug Of War')
+        .setTitle('🎲 Dice Game')
         .addFields(
             { name: 'Dice Rolls', value: String(rolls), inline: true },
             { name: 'Time Remaining', value: `${profile.time} min`, inline: true },
