@@ -102,7 +102,7 @@ async function handleTravel(interaction) {
     if (origin === destination) {
         const embed = new EmbedBuilder()
                 .setColor(0xE63C3C)
-                .setDescription(`❌ You're already in **${destination}**.`);
+                .setDescription(`❌ You're already in **${name}**.`);
 
         return interaction.editReply({ embeds: [embed] });
     }
@@ -125,7 +125,7 @@ async function handleTravel(interaction) {
     const embed = new EmbedBuilder()
                 .setTitle('🎪 Travelling...!')
                 .setColor(0xE63C3C)
-                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${destination}**\nIt took you ${cost} minutes...`);
+                .setDescription(`**${profile.name || interaction.user.username}** traveled to **${name}**\nIt took you ${cost} minutes...`);
 
     return interaction.editReply({ embeds: [embed] });
 }
